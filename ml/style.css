@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    background-color: rgba(96,123,139,0.3);
 }
 
 #wrapper{
@@ -42,6 +43,6 @@
 
 #menü a:hover{
     background-color: black;
-    color: white;
+    color: blanchedalmond;
     
 }
