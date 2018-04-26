@@ -6,7 +6,6 @@
 
 #wrapper{
     width:1100px;
-    max-width: 80%;
     margin:auto;
 }
 #banner{
@@ -33,6 +32,7 @@
     border: solid black 2px;
     border-radius: 12px;
     background-color: blanchedalmond;
+    color:blue;
     
     
 }
@@ -44,5 +44,31 @@
 #menü a:hover{
     background-color: black;
     color: blanchedalmond;
+    
+}
+
+#titelbild{
+    height:300px; 
+    border:solid black 1px;
+}
+
+#profilbild{
+    width:150px;
+    height:180px;
+    border:solid black 1px;
+    margin-left:41%;
+    margin-top: 50px;
+    
+}
+
+#userinfo{
+    height:200px;
+    border:solid black 1px;
+    margin-right:700px;
+}
+
+#statistik{
+    height:300px;
+    border:solid black 1px;
     
 }
