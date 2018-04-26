@@ -34,18 +34,11 @@
     margin-left:90px;
     margin-bottom: 10px;
     text-decoration: none;
-<<<<<<< HEAD
-    border: solid black 2px;
-    border-radius: 12px;
-    background-color: blanchedalmond;
-    color:blue;
-=======
     border: solid black 1px;
     border-radius: 5px;
     border-color: rgba(76, 76, 77, 0.329);
     background-color: rgba(202, 202, 202, 0.822);
     color: rgb(47, 126, 204);
->>>>>>> 21415ead47b9942656fe42f5832c54dac43909fa
     
     
 }
@@ -61,8 +54,4 @@
     
 }
 
-<<<<<<< HEAD
-
-=======
 /* Der Abstand von den kleinen Buttons nach unten muss verändert werden! --> */
->>>>>>> 21415ead47b9942656fe42f5832c54dac43909fa
