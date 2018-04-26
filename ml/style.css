@@ -62,31 +62,7 @@
 }
 
 <<<<<<< HEAD
-#titelbild{
-    height:300px; 
-    border:solid black 1px;
-}
 
-#profilbild{
-    width:150px;
-    height:180px;
-    border:solid black 1px;
-    margin-left:41%;
-    margin-top: 50px;
-    
-}
-
-#userinfo{
-    height:200px;
-    border:solid black 1px;
-    margin-right:700px;
-}
-
-#statistik{
-    height:300px;
-    border:solid black 1px;
-    
-}
 =======
 /* Der Abstand von den kleinen Buttons nach unten muss verändert werden! --> */
 >>>>>>> 21415ead47b9942656fe42f5832c54dac43909fa
