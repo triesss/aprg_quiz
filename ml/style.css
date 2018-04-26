@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    background-color: rgba(96,123,139,0.3);
+    background-color: hsla(200, 4%, 70%, 0.555)
 }
 
 #wrapper{
@@ -19,34 +19,49 @@
     margin-top: 10px;
     border: solid black 2px;
     margin-top:10px;
+    margin-bottom: 20px;
     
      
 }
 
 #menü a{
-    font-size: 1.5em;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 1.0em;
     padding-left: 15px;
     padding-right: 15px;
     margin-left:90px;
+    margin-bottom: 10px;
     text-decoration: none;
+<<<<<<< HEAD
     border: solid black 2px;
     border-radius: 12px;
     background-color: blanchedalmond;
     color:blue;
+=======
+    border: solid black 1px;
+    border-radius: 5px;
+    border-color: rgba(76, 76, 77, 0.329);
+    background-color: rgba(202, 202, 202, 0.822);
+    color: rgb(47, 126, 204);
+>>>>>>> 21415ead47b9942656fe42f5832c54dac43909fa
     
     
 }
 
 #menü a.play{
     font-size: 3em;
+    font-weight: 600;
 }
 
 #menü a:hover{
-    background-color: black;
-    color: blanchedalmond;
+    background-color: rgb(116, 116, 116);
+    color: rgb(223, 223, 223);
     
 }
 
+<<<<<<< HEAD
 #titelbild{
     height:300px; 
     border:solid black 1px;
@@ -72,3 +87,6 @@
     border:solid black 1px;
     
 }
+=======
+/* Der Abstand von den kleinen Buttons nach unten muss verändert werden! --> */
+>>>>>>> 21415ead47b9942656fe42f5832c54dac43909fa
