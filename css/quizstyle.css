@@ -1,0 +1,21 @@
+*{
+    /*default layout */
+}
+
+.answers ul{
+    list-style-type: none;
+    
+}
+
+.answerbuttons{
+    background-color: rgba(255, 255, 255, 0.13);
+    color: rgb(211, 103, 32);
+    border-radius: 10px;
+    border: solid 1px;
+    border-color: rgb(0, 0, 0);
+    padding: 4em 10em;
+    transition: 0.5s; /*experimentell aber sorgt für smoothe transitions*/
+}
+.answerbuttons:hover{
+    background-color: rgba(96, 101, 122, 0.342);
+}
