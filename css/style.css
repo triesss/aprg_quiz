@@ -5,51 +5,64 @@
 }
 
 #wrapper{
-    width:1100px;
+    width:1300px;
     margin:auto;
 }
 #banner{
     
-    height: 100px;
-    background: black;
-    margin-top:20px;
+    overflow: hidden;
+    margin: 0px;
 }
 
 #menü{
-    margin-top: 10px;
-    border: solid black 2px;
-    margin-top:10px;
+    margin-top: 0px;
     margin-bottom: 20px;
-    
-     
 }
+
+#menü ul{
+    display: block;
+    float: left;
+    list-style: none;
+}
+#menü ul:after { /* was nach jedem listenelement gezeigt werden soll (z.b. ein block) funzt noch nicht!*/
+    content: " ";
+    display: block;
+}
+#menü li {
+    display: inline-block;
+    padding: 10px 0.5em;
+}
+
 
 #menü a{
     font-family: Verdana, Geneva, sans-serif;
     font-weight: bolder;
     text-transform: uppercase;
-    font-size: 1.0em;
+    display: inline-block;
+    font-size: 1.2em;
     padding-left: 15px;
     padding-right: 15px;
     margin-left:90px;
     margin-bottom: 10px;
     text-decoration: none;
-    border: solid black 1px;
-    border-radius: 5px;
-    border-color: rgba(76, 76, 77, 0.329);
-    background-color: rgba(202, 202, 202, 0.822);
-    color: rgb(47, 126, 204);
+    color: rgb(54, 118, 190);
+
+    /*Unteres macht smoothe transitions beim hovern */
+    -webkit-transition: color .25s;
+    -moz-transition: color .25s;
+    -ms-transition: color .25s;
+    -o-transition: color .25s;
+    transition: color .25s;
     
     
 }
 
 #menü a.play{
-    font-size: 3em;
+    font-size: 2.5em;
     font-weight: 600;
 }
 
 #menü a:hover{
-    background-color: rgb(116, 116, 116);
     color: rgb(223, 223, 223);
     
 }
