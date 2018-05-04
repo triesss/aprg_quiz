@@ -1,5 +1,6 @@
 var Database = require('better-sqlite3');
 let db = new Database('../db/quiz.db');
+const Question = require('./classes/Question');
 var srand = require('srand');
 
 var row = db.prepare('SELECT * FROM game_sessions WHERE id=1').get();
@@ -25,9 +26,11 @@ for(var i = 0; i < AnzFr ; i++){
 
 console.log("Seed: " + seed + " Fragen: " + Fragen);
 Fragen.forEach(function(element){
-	var row = db.prepare(`select question from questions where id = ${element}`).get();
-	let question = row.question;
+	let q = new Question(element);
+	let question = q.question;
 	console.log(question);
-	row = db.prepare(`select answer from answers where qid = ${element}`).all();
-	console.log(row);
+	let answers = q.getAnswers();
+	answers.forEach(element =>{
+		console.log(element.answer + " " + (element.isTrue() === 1?"Wahr":"Falsch"));    
+	});
 });
