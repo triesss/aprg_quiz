@@ -3,7 +3,7 @@ let db = new Database('../db/quiz.db');
 const Answer = require('./Answer');
 
 class Question {
-    
+
     constructor(id) {
         if (typeof(id)==='string') {
             //erstelle neue Frage
@@ -13,6 +13,11 @@ class Question {
             var row = db.prepare(`select * from questions where id = ${id}`).get();
             this._id = row.id;
             this._question = row.question;
+			if (arguments.length === 2) {
+				if (arguments[1] === true) {
+					this._answers = this.getAnswers();
+				}
+			}
         }
     }
     get question(){
@@ -21,6 +26,9 @@ class Question {
     get id(){
         return this._id;
     }
+	get answers(){
+		return this._answers;
+	}
     getAnswers() {
         let answers = [];
         let ids = db.prepare(`select id from answers where qid = ${this._id}`).all();

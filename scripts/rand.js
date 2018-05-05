@@ -26,11 +26,9 @@ for(var i = 0; i < AnzFr ; i++){
 
 console.log("Seed: " + seed + " Fragen: " + Fragen);
 Fragen.forEach(function(element){
-	let q = new Question(element);
-	let question = q.question;
-	console.log(question);
-	let answers = q.getAnswers();
-	answers.forEach(element =>{
-		console.log(element.answer + " " + (element.isTrue() === 1?"Wahr":"Falsch"));    
+	let q = new Question(element,true);
+	console.log(q.question);
+	q.answers.forEach(element =>{
+		console.log(element.answer + " " + (element.isTrue() === 1?"Wahr":"Falsch"));
 	});
 });
