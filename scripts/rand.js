@@ -1,14 +1,13 @@
 var Database = require('better-sqlite3');
 let db = new Database('../db/quiz.db');
 const Question = require('./classes/Question');
+const GameSession = require('./classes/GameSession');
 var srand = require('srand');
 
-var row = db.prepare('SELECT * FROM game_sessions WHERE id=1').get();
-var seed = row.seed;
-var row = db.prepare('SELECT count(*) as anz from questions').get();
-var AnzFr = row.anz;
+let gs = new GameSession(1);
+var AnzFr = Question.prototype.count();
 
-srand.seed(seed);
+srand.seed(gs.seed);
 var Fragen = [];
 
 for(var i = 0; i < AnzFr ; i++){
@@ -24,7 +23,7 @@ for(var i = 0; i < AnzFr ; i++){
 	Fragen[i] = id;
 }
 
-console.log("Seed: " + seed + " Fragen: " + Fragen);
+console.log("Seed: " + gs.seed + " Fragen: " + Fragen);
 Fragen.forEach(function(element){
 	let q = new Question(element,true);
 	console.log(q.question);

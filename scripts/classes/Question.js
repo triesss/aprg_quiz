@@ -29,7 +29,7 @@ class Question {
 	get answers(){
 		return this._answers;
 	}
-    getAnswers() {
+    getAnswers(){
         let answers = [];
         let ids = db.prepare(`select id from answers where qid = ${this._id}`).all();
         ids.forEach(element => {
@@ -37,6 +37,10 @@ class Question {
         });
         return answers;
     }
+	count(){
+		var row = db.prepare('SELECT count(*) as anz from questions').get();
+		return row.anz;
+	}
 }
 
 module.exports = Question;
