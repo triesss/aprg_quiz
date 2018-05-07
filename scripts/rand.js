@@ -26,6 +26,7 @@ for(var i = 0; i < AnzFr ; i++){
 console.log("Seed: " + gs.seed + " Fragen: " + Fragen);
 Fragen.forEach(function(element){
 	let q = new Question(element,true);
+    console.log("---------Frage "+q.id+"---------");
 	console.log(q.question);
 	q.answers.forEach(element =>{
 		console.log(element.answer + " " + (element.isTrue() === 1?"Wahr":"Falsch"));
