@@ -12,7 +12,7 @@
 
     <body>
 
-    <div id="wrapper">
+   
 
     <div id="banner"> <img src="images/duellquizbanner.jpg"> </div>
 
@@ -30,8 +30,51 @@
 
     </div>
 
+    <div class = "content">
+
+        <section id="boxes">
+                <div class="container">
+                  <div class="box">
+                    <img src="">
+                    <h3>Play against your friends</h3>
+                    <p>Have Fun playing against your friends</p>
+                  </div>
+                  <div class="box">
+                    <img src="">
+                    <h3>Acquire new knowledge</h3>
+                    <p>By answering difficult questions you can acquire new knowledge that could be useful in your daily life!</p>
+                  </div>
+                  <div class="box">
+                    <img src="">
+                    <h3>Bestehe das Semester!</h3>
+                    <p>Mit diesem Projekt erhöht sich die Wahrscheinlichkeit, dass du Angewandte Programmierung bestehst</p>
+                  </div>
+                </div>
+              </section>
+
+    </section>
+
+    <footer>
+        <p>Ein Projekt von Joshua, Alex und Benjamin</p>
+    </footer>
+
     </div>
 
+    <script>
+            window.onscroll = function() {stickyNavi()};
+            
+            var navi = document.getElementById("navi");
+            var sticky = navi.offsetTop;
+            
+            function stickyNavi() {
+            if (window.pageYOffset >= sticky) {
+                navi.classList.add("sticky")
+              } else {
+                navi.classList.remove("sticky");
+              }
+            
+            }
+            </script>
     </body>
 
 
