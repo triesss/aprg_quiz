@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+
+    <head>  
+        <meta charset="utf-8">
+        <title></title>
+        <link href="css/profilestyle.css" type="text/css" rel="stylesheet">
+    
+    </head>
+
+
+    <body>
+    
+    <div id="wrapper">
+        
+    <div id="banner"> <img src="images/duellquizbanner.jpg"> </div>
+    
+    <div id="navi">
+            
+    <p id="menü"> 
+        
+     <a href="#">Home</a>   
+     <a href="#">Profil</a>   
+     <a class="play" href="#">Play</a>   
+     <a href="#">Leaderboard</a>   
+     <a href="#">Logout</a>   
+        
+    </p>    
+        
+    </div>
+        
+        
+    
+    <div id="titelbild">
+        
+        <form action="/changecover" method="post">
+        <input type="submit" value=">" /> 
+        </form> 
+        
+        <img src="<%= typeof cover != 'undefined' ? cover : '' %>">
+        
+    <div id="profilbild">
+        
+    <img src="<%= typeof profile != 'undefined' ? profile : '' %>"class="responsive-img">    
+    </div>    
+        
+    </div> 
+        
+       
+        
+    <div id="userinfo">
+        
+    <div id="pbchanger">
+    <form action="/change" method="post">
+    
+    <button type="submit">Change Profile picture</button>
+    </form>
+    
+  
+    </div>
+        
+    </div>  
+        
+    <div id="statistik">
+        
+    </div>    
+    
+    </div>     
+    </body>
+
+
+
+
+
+
+
+</html>
