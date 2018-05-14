@@ -14,6 +14,12 @@ let db = new sqlite3.Database('benutzer.db', (error) => {
 	}
 	console.log('Connected to the database shop')
 });
+const session = require('express-session');
+app.use(session({ 
+	secret: 'example',
+	resave: false,
+	saveUninitialized: true
+}));
 
 app.listen(3000,function(){
 	console.log("Port on 3000");
@@ -143,6 +149,7 @@ app.post('/register',function(req,res){
 			
 		
 		else{
+				req.session['authenticated'] = true;
 				name = user;
 				console.log("Login sucessfull");
 				res.redirect('/profile'); //sobald home eingerichtet ist dann darauf weiterverlinken
@@ -164,7 +171,7 @@ app.post('/register',function(req,res){
 	app.get('/profile', function(req,res){
 		
 		
-		
+		if (req.session['authenticated'] == true){
 			
 		sql = `SELECT * from users where username = '${name}'`;
 		//in diesem Abschnitt suche ich das bild des users in der Datenbank
@@ -205,7 +212,11 @@ app.post('/register',function(req,res){
 		}
 		});
 		
+	}else{
+		res.render('error', {message: "You have to log in first"});
+	}
 	}); 
+	
 	
 //weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
@@ -215,7 +226,7 @@ app.post('/change',function(req,res){
 
 //hier wird das hochgeladene bild in die Datenbank des users hinzugefügt/ersetzt
 app.post('/upload', function(req,res){
-	
+	if (req.session['authenticated'] == true){
   upload(req, res, (err) => {
     if(err){
       res.render('uploader', {
@@ -237,7 +248,11 @@ app.post('/upload', function(req,res){
 				res.redirect('/profile');
       }
     }
-  });	
+  });
+	}
+		else{
+			res.render('error', {message: "You have to log in first"});
+		}
 });
 
 //Änderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
@@ -249,5 +264,12 @@ app.post('/changecover',function(req,res){
 			zahl = 1;
 		}
 		res.redirect('/profile');
+		
 	});
+	
+app.get('/logout',function(req,res){
+	delete req.session['authenticated'];
+	res.redirect('/');
+	
+});
 
