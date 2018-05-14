@@ -186,8 +186,7 @@ app.post('/register',function(req,res){
 			console.log(im);
 			
 			im = row.image;
-		}
-		});
+		
 		
 		
 			
@@ -203,7 +202,8 @@ app.post('/register',function(req,res){
 			cover: `images/titelbild${zahl}.jpg`
 			
 			});
-		
+		}
+		});
 		
 	}); 
 	
