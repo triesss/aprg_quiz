@@ -89,8 +89,9 @@ app.post('/register',function(req,res){
 	
 		
 		let sql = `select * from users where username = '${user}'`;
-		db.get(sql,function(row){
-		if (row == undefined){
+		db.all(sql,function(error,rows){
+		if (rows.length == 0){
+		
 			
 		sql =  `INSERT INTO users(username, password) VALUES ('${user}', '${pass}')`;
 		db.run(sql);		
@@ -101,30 +102,28 @@ app.post('/register',function(req,res){
 		
 		sql = `SELECT * FROM users`;
 		db.all(sql, function(err, rows){
-		if (err){
-		console.log(err.message);
-		}
-		else{
-		console.log(rows);
+			if (err){
+				console.log(err.message);
+			}
+			else{
+				console.log(rows);
 			
-		}
-		});
+			}
+			});
 		
 		}
-		else {	//Dieser Teil wird nie abgespielt irgendwie... sprich der selbe username ist mehrmals möglich....
-			if (row != undefined){
+		else {	
+			
 			res.render('regilog',{
 			message1: 'username already exist'
 			});	
 			
-		}
+		
 		}
 	});
 	
 	}
-			
-										
-			
+					
 	});
 		
 		
@@ -135,27 +134,22 @@ app.post('/register',function(req,res){
 	const pass = req.body['password'];
 	
 	let sql = `select * from users where username = '${user}' and password = '${pass}'`;
-	db.get(sql,function(error,row){
-		if (error){ //dieser teil wird auch nie abgespielt, muss noch behoben werden
-			if (row == undefined){
+	db.all(sql,function(error,rows){ 
+			if (rows.length == 0){
 			res.render('regilog',{
 			message2: 'wrong username or password'
 			});
 			}
-			else{
-				console.log(error.message);
-			}
-		}
+			
+		
 		else{
-			if (row != undefined){
 				name = user;
 				console.log("Login sucessfull");
 				res.redirect('/profile'); //sobald home eingerichtet ist dann darauf weiterverlinken
-				console.log(name);
 			}
 			
 			
-		}
+		
 	});
 	
 	});
@@ -165,60 +159,61 @@ app.post('/register',function(req,res){
 
 
 	let zahl = 1; //für die Titelbilder 1-5 siehe /changecover
-	let userId;	//globale Variable für user id
-
+	let im; // diese variable bekommt den namen des profilbildes 
+	
 	app.get('/profile', function(req,res){
-		console.log(name);
-		sql = `SELECT * FROM users WHERE username = '${name}'`;
-		db.get(sql,[],function(err,row){
-			if (err){
-				
-				console.log(err.message);
-				console.log("erste");
-				
-			}
+		
+		
+		
 			
-		else{
-			
-			userId = row.id;
-			console.log(userId);
-		}
-		});
-		let im;
-		sql = `SELECT image FROM users where id= ${userId}`;
-		db.get(sql,[],function(err,row){
-			if (err){ 
-				db.run(`UPDATE users SET image = 'nopb.jpg' where id = ${userId}`,function(error){
+		sql = `SELECT * from users where username = '${name}'`;
+		//in diesem Abschnitt suche ich das bild des users in der Datenbank
+		db.each(sql,[],function(err,row){
+			if (row == undefined){ 
+				db.run(`UPDATE users SET image = 'nopb.jpg' where id = '${name}'`,function(error){
 					if (error){
 						console.log(error.message);
 					}
+					else{
+						im = row.image;
+					}
 				});
-				
+				console.log("erster");
 				res.redirect('/profile');
-			}
-			
+		}
 		else{
-			im = row.image;
-			if (im == null){
-				im = 'nopb.jpg';
-			}
+			console.log("zweiter");
 			console.log(im);
+			
+			im = row.image;
+		}
+		});
+		
+		
+			
+		
+			// Dieser Ausschnitt wird zuerst abgespielt, deswegen alles so umständlich
+			if (im == null){
+				console.log("dritter");
+			im = 'nopb.jpg';
+			}
 			res.render('profile',{
 						// die entsprechenden Pfade fürs Profilbild und Titelbild
 			profile: `uploads/${im}`,
 			cover: `images/titelbild${zahl}.jpg`
 			
-		});
-		}
-		});
+			});
+		
 		
 	}); 
 	
-
+//weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
 	res.render('uploader');
 });	
 
+
+//hier wird das hochgeladene bild in die Datenbank des users hinzugefügt/ersetzt
 app.post('/upload', function(req,res){
 	
   upload(req, res, (err) => {
@@ -233,10 +228,10 @@ app.post('/upload', function(req,res){
         });
       } else {
 		 pb = req.file.filename;
-		sql = `INSERT into users (image) VALUES ('${pb}') where id= ${userId}`;
+		sql = `INSERT into users (image) VALUES ('${pb}') where username= '${name}'`;
 		 db.run(sql,function(row){
 					if (row != undefined){
-						db.run(`UPDATE users SET image='${pb}' WHERE id= ${userId}`);
+						db.run(`UPDATE users SET image='${pb}' WHERE username= '${name}'`);
 					}
 				});
 				res.redirect('/profile');
@@ -245,6 +240,7 @@ app.post('/upload', function(req,res){
   });	
 });
 
+//Änderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
 app.post('/changecover',function(req,res){
 		if (zahl < 5){
 		zahl += 1;
