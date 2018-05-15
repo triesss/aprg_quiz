@@ -62,6 +62,12 @@ class User {
     get isAdmin(){
         return this._isAdmin;
     }
+    usernameExists(username){
+        return typeof db.prepare("select username from users where username = (?)").get(username) === 'undefined'?false:true;
+    }
+    emailExists(email){
+        return typeof db.prepare("select email from users where email = (?)").get(email) === 'undefined'?false:true;
+    }
     correctPassword(username,password){
         return db.prepare(`select password from users where username = "${username}"`).get().password === sha1(password);
     }
@@ -72,7 +78,7 @@ class User {
             this._id = db.prepare(`select id from users where email = "${this._email}" and username = "${this._username}"`).get().id;
         } else if (!this._new) {
             let stmt = db.prepare(`update users set email = "${this._email}", password = "${this._password}", age = "${this._age}", image = (?), comment = "${this._comment}" where id = ${this._id}`);
-            stmt.run(this._image===null?null:this._image);
+            stmt.run(this._image);
         }
     }
 }
