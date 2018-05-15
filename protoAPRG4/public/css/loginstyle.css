@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+#wrapper{
+    width:1300px;
+    margin:auto;
+}
+#banner{
+    
+    overflow: hidden;
+    margin: 0px;
+}
+
+#register{
+    float: left;
+    margin-top: 100px;
+    width:600px;
+    height:500px;
+    
+}
+h1{
+    
+    margin-left: 25%;
+}
+
+button{
+    width: 40px;
+}
+#login{
+    background-color: white;
+    float:right;
+    margin-top: 100px;
+    width:600px;
+    height: 200px;
+}
+
+
+
+form{
+
+    margin-top: 30px;
+    margin-left: 20%;
+}
+
