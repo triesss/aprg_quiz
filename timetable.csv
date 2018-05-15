@@ -7,12 +7,12 @@ Alex;Datenbank erstellt und geseeded;2
 Alex;Klassenstruktur begonnen;5
 Alex;Tests: Klassenfunktionen;2
 Alex;Klassenfunktion save() erstellt;1
-;;
 Joshua;Mittwochsbesprechung;1
 Joshua;Mittwochsbesprechung;1
 Joshua;Mittwochsbesprechung;1
-Joshua;Menüleiste;1 1/2
+Joshua;MenÃ¼leiste;1,5
 Joshua;file upload;2
 Joshua;profile einrichten;2
-Joshua;server einrichten;3    
-Joshua;Login/register;2    
+Joshua;server einrichten;3
+Joshua;Login/register;2
+Alex;User-Klasse;2
