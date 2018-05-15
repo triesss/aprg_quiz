@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-const Question = require('./classes/Question');
 
-let quest = new Question(3);
-let question = quest.question;
-console.log(question);
-let answers = quest.getAnswers();
-answers.forEach(element => {
-    console.log(element.answer + " " + (element.isTrue() === 1?"Wahr":"Falsch"));    
-});
-
-=======
 var Database = require('better-sqlite3');
 let db = new Database('../db/quiz.db');
 const Question = require('./classes/Question');
@@ -45,4 +34,3 @@ a.push(new Answer("Etwa 75 Mio.",false,q3.id));
 //     element.save();
 // });
 console.log(a);
->>>>>>> 89ad92e029307c37613f940fca141a219f11fec4
