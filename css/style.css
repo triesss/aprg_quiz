@@ -37,7 +37,7 @@ body{
 }
 #menü li {
     display: inline-block;
-    padding: 5px 1.5em 1px 1.5em;
+    padding: 5px 1.1em 1px 1.1em;
 }
 
 
@@ -48,7 +48,7 @@ body{
     display: inline-block;
     font-size: 1.4em;
     padding-left: 60px;
-    margin: 0px 60px;
+    margin: 0px 40px;
     text-decoration: none;
     color: rgb(54, 118, 190);
 

@@ -7,17 +7,40 @@
     <link href="css/quizstyle.css" type="text/css" rel="stylesheet">
     <title>Playing...</title>
 </head>
-<body>
+<body onload="createAnswers()">
     
     <div class="answers">
 
         <!--DAS IST NUR EIN ENTWURF!-->
 
+        <form action="checkAnswers" method="POST">
         <ul>
-            <li> <input class="answerbuttons"type="button" value="Antwort A" type="submit"></li>
+            <li> <input class="answerbuttons"type="button" type="submit" id="answer1"></li>
+            <li> <input class="answerbuttons"type="button" type="submit" id="answer2"></li>
+            <li> <input class="answerbuttons"type="button" type="submit" id="answer3"></li>
+            <li> <input class="answerbuttons"type="button" type="submit" id="answer4"></li>
         </ul>
+    </form>
 
     </div>
+
+    <script>
+        //id = die fragen id aus dem seed
+        //let question = new question(id);
+
+        function createAnswers() {
+            //Macht ein random answerIndex Array
+            let answersIndex = [0, 1, 2 ,3];
+            answersIndex.sort(function(a, b){return 0.5 - Math.random()});
+            console.log("Buttons werden mit Antworten versehen...");
+            document.getElementById('answer1').value = answersIndex[0];
+            document.getElementById('answer2').value = answersIndex[1];
+            document.getElementById('answer3').value = answersIndex[2];
+            document.getElementById('answer4').value = answersIndex[3];
+
+        }
+    
+    </script>
 
 
 </body>
