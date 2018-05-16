@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: hsla(200, 4%, 70%, 0.555)
+}
+
+#wrapper{
+    width:1300px;
+    margin:auto;
+}
+#banner{
+    
+    overflow: hidden;
+    margin: 0px;
+}
+
+#menü{
+    margin-top: 0px;
+}
+
+#menü ul{
+    display: block;
+    float: left;
+    list-style: none;
+}
+#menü ul:after { /* was nach jedem listenelement gezeigt werden soll (z.b. ein block) funzt noch nicht!*/
+    content: " ";
+    display: block;
+}
+#menü li {
+    display: inline-block;
+    padding: 10px 0.5em;
+}
+
+
+#menü a{
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bolder;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 1.2em;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left:110px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: rgb(54, 118, 190);
+
+    /*Unteres macht smoothe transitions beim hovern */
+    -webkit-transition: color .25s;
+    -moz-transition: color .25s;
+    -ms-transition: color .25s;
+    -o-transition: color .25s;
+    transition: color .25s;
+    
+    
+}
+
+#menü a.play{
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+#menü a:hover{
+    color: rgb(223, 223, 223);
+    
+}
+
+#titelbild{
+    height:300px; 
+    border:solid black 1px;
+}
+
+#profilbild{
+    position:absolute;
+    left:740px;
+    top:320px;
+    width:150px;
+    height:180px;
+    border:solid black 1px;
+}
+
+#titelbild img{
+    z-index: 0;
+    width:1300px;
+    height:300px;
+}
+
+#profilbild img{
+    z-index: 1;
+    width:150px;
+    height:180px;
+}
+
+#userinfo{
+    height:200px;
+    border:solid black 1px;
+    margin-right:700px;
+}
+
+#user h3{
+    margin-top: 5px;
+}
+
+#pbchanger{
+    width:200px;
+    margin-left: 850px;
+}
+
+#pbchanger button{
+    font-size: 1.5em;
+
+}
+
+#pbchanger button:hover{
+    border:solid white 3px;
+
+}
+#statistik{
+    height:300px;
+    border:solid black 1px;
+    
+}
+
+#titelbild form{
+    position:absolute;
+    right:195px;
+    top:400px;
+}
+
+#titelbild form:hover{
+    border:solid white 3px;
+}
