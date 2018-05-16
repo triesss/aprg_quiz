@@ -24,34 +24,40 @@ let session = new GameSession(1);
 
 
 
-let q3 = new Question(7);
-let a = [];
-a.push(new Answer("Etwa 67 Mio.",true,q3.id));
-a.push(new Answer("Etwa 70 Mio.",false,q3.id));
-a.push(new Answer("Etwa 62 Mio.",false,q3.id));
-a.push(new Answer("Etwa 75 Mio.",false,q3.id));
-
+// let q3 = new Question(7);
+// let a = [];
+// a.push(new Answer("Etwa 67 Mio.",true,q3.id));
+// a.push(new Answer("Etwa 70 Mio.",false,q3.id));
+// a.push(new Answer("Etwa 62 Mio.",false,q3.id));
+// a.push(new Answer("Etwa 75 Mio.",false,q3.id));
+//
+// // console.log(a);
+// // a.forEach(element => {
+// //     element.save();
+// // });
 // console.log(a);
-// a.forEach(element => {
-//     element.save();
-// });
-console.log(a);
-// User aus Tabelle auslesen und bearbeiten
-let user = new User(1);
-console.log(user);
-user.password = "hallo";
-user.image = null;
-user.comment = "Ich bin der Boss";
-user.save();
-console.log(user);
-console.log("correctPassword:"+User.prototype.correctPassword("superadmin","hallo"));
-console.log("correctPassword:"+User.prototype.correctPassword("superadmin","lalala"));
-console.log("usernameExists:"+User.prototype.usernameExists("super"));
-console.log("usernameExists:"+User.prototype.usernameExists("superadmin"));
-console.log("emailExists:"+User.prototype.emailExists("super@admin.de"));
-console.log("emailExists:"+User.prototype.emailExists("super@admin.com"));
-// neuen User erstellen und in Datenbank speichern
-let user1 = new User("neuer@user.net","newuser123","hallo123",null,30,"Hallo ich bin neu");
-console.log(user1);
+// // User aus Tabelle auslesen und bearbeiten
+// let user = new User(1);
+// console.log(user);
+// user.password = "hallo123";
+// user.image = "hund.png";
+// user.comment = "Ich";
+// user.save();
+// console.log(user);
+// console.log("correctPassword:"+User.prototype.correctPassword("superadmin","hallo"));
+// console.log("correctPassword:"+User.prototype.correctPassword("superadmin","lalala"));
+// console.log("usernameExists:"+User.prototype.usernameExists("super"));
+// console.log("usernameExists:"+User.prototype.usernameExists("superadmin"));
+// console.log("emailExists:"+User.prototype.emailExists("super@admin.de"));
+// console.log("emailExists:"+User.prototype.emailExists("super@admin.com"));
+// // neuen User erstellen und in Datenbank speichern
+// let user1 = new User("neuer@user.net","newuser123","hallo123",null,30,"Hallo ich bin neu");
+// console.log(user1);
+
+let user2 = new User("peter@lustig.de","peterlustig","lustig",null,null,null);
+console.log(user2);
+//user2.save();
+let user3 = new User(4);
+console.log(user3);
 //user1.save();
 //console.log(user1);
