@@ -59,5 +59,7 @@ console.log(user2);
 //user2.save();
 let user3 = new User(4);
 console.log(user3);
+console.log(User.prototype.idOfUsername("newuser123"));
+console.log(User.prototype.idOfUsername("blabla"));
 //user1.save();
 //console.log(user1);

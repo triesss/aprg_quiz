@@ -68,6 +68,11 @@ class User {
     emailExists(email){
         return typeof db.prepare("select email from users where email = (?)").get(email) === 'undefined'?false:true;
     }
+    //Returns if of matching username or -1 if no matching username was found.
+    idOfUsername(username){
+        let stmt = db.prepare("select id from users where username = (?)").get(username);
+        return typeof stmt === 'undefined'?-1:stmt.id;
+    }
     correctPassword(username,password){
         return db.prepare(`select password from users where username = "${username}"`).get().password === sha1(password);
     }
