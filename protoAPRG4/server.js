@@ -37,7 +37,7 @@ app.listen(3000,function(){
 
 //Storage Engine
 const storage = multer.diskStorage({
-  destination: './public/uploads/',
+  destination: '../public/uploads/',
   filename: function(req, file, cb){
     cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
@@ -72,7 +72,7 @@ function checkFileType(file, cb){
 
 
 // Public Folder (für css bilder usw)
-app.use(express.static('./public'));
+app.use(express.static('../public'));
 
 app.get('/',function(req,res){
 	res.render('regilog');
