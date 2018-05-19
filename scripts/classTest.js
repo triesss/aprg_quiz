@@ -5,6 +5,7 @@ const Question = require('./classes/Question');
 const Answer = require('./classes/Answer');
 const GameSession = require('./classes/GameSession');
 const User = require('./classes/User');
+const UserStatistic = require('./classes/UserStatistic');
 
 let quest = new Question(1,true);
 // console.log(quest.question);
@@ -62,4 +63,27 @@ console.log(user3);
 console.log(User.prototype.idOfUsername("newuser123"));
 console.log(User.prototype.idOfUsername("blabla"));
 //user1.save();
-//console.log(user1);
+//console.log(user1;
+
+
+
+let us = new UserStatistic(1);
+console.log(us);
+us.addDraw();
+us.addWin();
+us.addLose();
+console.log(us);
+us.save();
+let us2 = new UserStatistic(4);
+console.log(us2);
+us2.addWin();
+us2.save();
+console.log(us2);
+console.log(UserStatistic.prototype.userStatisticExists(4));
+
+console.log(UserStatistic.prototype.userStatisticExists(5));
+
+us3 = new UserStatistic(3);
+console.log(us3);
+us3.addLose();
+us3.save();
