@@ -98,8 +98,9 @@
     margin-right:700px;
 }
 
-#user h3{
+#user h2{
     margin-top: 5px;
+    margin-left: 140px;
 }
 
 #pbchanger{
@@ -108,8 +109,22 @@
 }
 
 #pbchanger button{
-    font-size: 1.5em;
+    position: absolute;
+    top: 570px;
+    right: 195px;
+    font-size: 1.2em;
 
+}
+
+#editprofile button{
+    position: absolute;
+    top: 570px;
+    right: 450px;
+    font-size: 1.2em;
+}
+
+#editprofile button:hover{
+   border:solid white 3px;
 }
 
 #pbchanger button:hover{
@@ -120,6 +135,10 @@
     height:300px;
     border:solid black 1px;
     
+}
+#statistik h2{
+    margin-top: 40px;
+    margin-left: 140px;
 }
 
 #titelbild form{

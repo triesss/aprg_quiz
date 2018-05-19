@@ -7,6 +7,7 @@ app.engine('.ejs', require('ejs').__express);
 app.set('view engine', 'ejs');
 const path = require('path');
 const User = require('./classes/User');
+const Statistic = require('./classes/UserStatistic');
 
 
 
@@ -109,8 +110,11 @@ app.post('/register',function(req,res){
 	
 	
 					
-	
-		
+	let comment;
+	let age;
+	let wins;
+	let loses;
+	let draws;
 	let userID;	
 	let name; //globale variable für den username
 	app.post('/login',function(req,res){
@@ -125,6 +129,11 @@ app.post('/register',function(req,res){
 				console.log("Login sucessfull");
 				res.redirect('/profile'); //sobald home eingerichtet ist dann darauf weiterverlinken
 				userID = User.prototype.idOfUsername(name);
+				let stats = new Statistic(userID);
+				stats.save();
+				wins = stats.wins;
+				loses = stats.loses;
+				draws = stats.draws;
 			
 		}
 		
@@ -155,8 +164,12 @@ app.post('/register',function(req,res){
 			
 		let user2 = new User(userID);
 		
-		
-		
+		if(user2.age != null){
+		age = user2.age;
+		}
+		if(user2.comment != null){
+		comment = user2.comment;
+		}
 			
 		
 			// Dieser Ausschnitt wird zuerst abgespielt, deswegen alles so umständlich
@@ -169,7 +182,12 @@ app.post('/register',function(req,res){
 							// die entsprechenden Pfade fürs Profilbild und Titelbild
 			profile: `uploads/${user2.image}`,
 			cover: `images/titelbild${zahl}.jpg`,
-			user: name
+			user: name ,
+			wins: wins ,
+			loses: loses ,
+			draws: draws ,
+			age: age ,
+			comment: comment
 			
 			});
 		
@@ -227,6 +245,20 @@ app.post('/changecover',function(req,res){
 		res.redirect('/profile');
 		
 	});
+
+app.post('/edit',function(req,res){
+	res.render('edit');
+});
+
+app.post('/editpt2',function(req,res){
+	age = req.body["age"];
+	comment = req.body["comment"];
+	let user = new User(userID);
+	user.age = age;
+	user.comment = comment;
+	user.save();
+	res.redirect('/profile');
+});	
 	
 app.get('/logout',function(req,res){
 	delete req.session['authenticated'];

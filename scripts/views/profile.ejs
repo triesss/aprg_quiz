@@ -53,7 +53,9 @@
         
     <div id="user">    
         <h1>User:</h1>
-        <h3><%= user %></h3> 
+        <h2><%= user %></h2> 
+        <h2><%= typeof age != 'undefined' ? age : '' %></h2> 
+        <h2><%= typeof comment != 'undefined' ? comment : '' %></h2> 
         
         </div>
         
@@ -66,10 +68,22 @@
   
     </div>
         
+    <div id="editprofile">
+        
+        <form action="/edit" method="post">
+    
+    <button type="submit">Edit profile</button>
+    </form>
+        
+    </div>    
+        
     </div>  
         
     <div id="statistik">
         <h1>Statistics:</h1>
+        <h2>Wins: <%= wins %></h2>
+        <h2>Loses: <%= loses %></h2>
+        <h2>Draws: <%= draws %></h2>
     </div>    
     
     </div>     
