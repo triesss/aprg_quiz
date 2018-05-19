@@ -84,6 +84,7 @@ app.post('/register',function(req,res){
 		if (!User.prototype.usernameExists(user)){
 		
 		let user1 = new User(mail,user,pass,null,null,null);
+		user1.save();
 		console.log(user1);
 			
 				
@@ -110,7 +111,7 @@ app.post('/register',function(req,res){
 					
 	
 		
-		
+	let userID;	
 	let name; //globale variable für den username
 	app.post('/login',function(req,res){
 	
@@ -123,6 +124,7 @@ app.post('/register',function(req,res){
 				name = user;
 				console.log("Login sucessfull");
 				res.redirect('/profile'); //sobald home eingerichtet ist dann darauf weiterverlinken
+				userID = User.prototype.idOfUsername(name);
 			
 		}
 		
@@ -150,7 +152,8 @@ app.post('/register',function(req,res){
 		
 		if (req.session['authenticated'] == true){
 			
-		let user2 = new User(2);
+			
+		let user2 = new User(userID);
 		
 		
 		
@@ -199,7 +202,7 @@ app.post('/upload', function(req,res){
         });
       } else {
 		 pb = req.file.filename;
-		let user = new User(2);
+		let user = new User(userID);
 			user.image = pb;
 			user.save();
 				res.redirect('/profile');
