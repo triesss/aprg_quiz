@@ -16,6 +16,7 @@ let quest = new Question(1,true);
 
 
 let session = new GameSession(1);
+console.log(session);
 // console.log("AnzFr: "+Question.prototype.count());
 // let q2 = new Question("Wie viele Einwohner hat Frankreich?");
 // console.log(q2.question);
@@ -73,11 +74,11 @@ us.addDraw();
 us.addWin();
 us.addLose();
 console.log(us);
-us.save();
+//us.save();
 let us2 = new UserStatistic(4);
 console.log(us2);
 us2.addWin();
-us2.save();
+//us2.save();
 console.log(us2);
 console.log(UserStatistic.prototype.userStatisticExists(4));
 
@@ -86,4 +87,4 @@ console.log(UserStatistic.prototype.userStatisticExists(5));
 us3 = new UserStatistic(3);
 console.log(us3);
 us3.addLose();
-us3.save();
+//us3.save();
