@@ -27,6 +27,7 @@ CREATE TABLE game_sessions (
 	ub_id integer not null,
 	ub_points integer default 0,
 	ub_current_question integer not null,
+	done boolean default 0;
 	FOREIGN KEY(ua_id) REFERENCES users(id),
 	FOREIGN KEY(ub_id) REFERENCES users(id),
 	FOREIGN KEY(ua_current_question) REFERENCES questions(id),

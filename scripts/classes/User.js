@@ -26,6 +26,9 @@ class User {
             this._new = true;
         }
     }
+	get id(){
+		return this._id;
+	}
     get password(){
         return this._password;
     }
@@ -68,6 +71,10 @@ class User {
     emailExists(email){
         return typeof db.prepare("select email from users where email = (?)").get(email) === 'undefined'?false:true;
     }
+	idExists(id){
+		let stmt = db.prepare("select id from users where id = (?)").get(id);
+		return typeof stmt === 'undefined'?false:true;
+	}
     //Returns if of matching username or -1 if no matching username was found.
     idOfUsername(username){
         let stmt = db.prepare("select id from users where username = (?)").get(username);

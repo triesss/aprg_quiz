@@ -12,8 +12,16 @@ console.log(gs.getQuestionIds());
 gs.addPoint('a');
 gs.addPoint('b');
 
-console.log(gs.getCurrentQuestion('a'));
-gs.questionA = gs.getNextQuestion('a');
-console.log(gs.getCurrentQuestion('a'));
-console.log(gs);
-gs.save('a');
+// console.log(gs.getCurrentQuestion('a'));
+// gs.questionA = gs.getNextQuestion('a');
+// console.log(gs.getCurrentQuestion('a'));
+// console.log(gs);
+// gs.save('a');
+
+
+
+gs2 = new GameSession(3,4);
+console.log(gs2);
+console.log(gs2.getQuestionIds());
+gs2.save();
+console.log(gs2.id);
