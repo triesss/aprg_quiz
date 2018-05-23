@@ -10,7 +10,7 @@
     </head>
 
 
-    <body>
+    <body onload="loginout()">
 
    
 
@@ -24,7 +24,7 @@
      <li><a href="#">Profil</a></li>
      <li><a class="play" href="#">Play</a></li>
      <li><a href="#">Leaderboard</a></li>
-     <li><a href="#">Logout</a></li>
+     <li><a id="loginbutton" href="#" >Log</a></li>
 
     </ul>
 
@@ -35,17 +35,17 @@
         <section id="boxes">
                 <div class="container">
                   <div class="box">
-                    <img src="">
+                    <img src="/images/friends.png" class="pictures">
                     <h3>Play against your friends</h3>
                     <p>Have Fun playing against your friends</p>
                   </div>
                   <div class="box">
-                    <img src="">
+                    <img src="/images/know.jpg" class="pictures">
                     <h3>Acquire new knowledge</h3>
                     <p>By answering difficult questions you can acquire new knowledge that could be useful in your daily life!</p>
                   </div>
                   <div class="box">
-                    <img src="">
+                    <img src="/images/semester.png" id="semesterpic">
                     <h3>Bestehe das Semester!</h3>
                     <p>Mit diesem Projekt erhöht sich die Wahrscheinlichkeit, dass du Angewandte Programmierung bestehst</p>
                   </div>
@@ -61,21 +61,19 @@
     </div>
 
     <script>
-           /* window.onscroll = function() {stickyNavi()};
-            
-            var navi = document.getElementById("navi");
-            var sticky = navi.offsetTop;
-            
-            function stickyNavi() {
-            if (window.pageYOffset >= sticky) {
-                navi.classList.add("sticky")
-              } else {
-                navi.classList.remove("sticky");
-              }
-            
-            }
-            */
-            </script>
+
+      //Zeigt login / out je nachdem was erforderlich ist
+      var userIsLoggedIn = false;
+      function loginout(){
+        let loginbutton = document.getElementById('loginbutton');
+           if(userIsLoggedIn){
+             loginbutton.innerHTML = "Logout";
+           }
+           else{
+             loginbutton.innerHTML = "Login";
+           }
+      }
+    </script>
     </body>
 
 

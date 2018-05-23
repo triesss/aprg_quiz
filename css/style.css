@@ -102,7 +102,11 @@ body{
   }
   
   #boxes .box img{
-    width:90px;
+    width:150px;
+    margin-bottom: 40px;
+  }
+  #boxes .box #semesterpic{
+      width: 230px;
   }
 
   footer {
