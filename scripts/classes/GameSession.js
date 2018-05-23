@@ -9,7 +9,7 @@ class GameSession {
 		if (typeof(id) === 'number' && arguments.length === 1) {
 			this._id = id;
 			let row = db.prepare(`select * from game_sessions where id = ${this._id}`).get();
-			console.log(row);
+			//console.log(row);
 			this._seed = row.seed;
 			this._userA = new User(row.ua_id);
 			this._userB = new User(row.ub_id);

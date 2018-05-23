@@ -20,3 +20,5 @@ insert into answers (qid,answer,is_true) values (3,"Sarum",0);
 insert into game_sessions (seed,ua_id,ub_id,ua_current_question,ub_current_question) values (123456,1,2,1,1);
 insert into user_statistics (uid,wins) values (1,42);
 insert into user_statistics (uid) values (2);
+insert into games (ua_id,ub_id,gs_id) values (1,2,1);
+insert into games (ua_id) values (3);

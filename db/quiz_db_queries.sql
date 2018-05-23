@@ -5,6 +5,7 @@ CREATE TABLE users (
 	password varchar(255) not null,
 	image text, age int,
 	comment varchar(255),
+	background_image integer default 1,
 	is_admin boolean default 0
 );
 CREATE TABLE questions (
@@ -40,4 +41,15 @@ CREATE TABLE user_statistics (
 	loses integer default 0,
 	draws integer default 0,
 	FOREIGN KEY(uid) REFERENCES users(id)
+);
+CREATE TABLE games (
+	id integer primary key autoincrement,
+	ua_id integer,
+	ub_id integer,
+	gs_id integer,
+	ua_done boolean default 0,
+	ub_done boolean default 0,
+	FOREIGN KEY(ua_id) REFERENCES users(id),
+	FOREIGN KEY(ub_id) REFERENCES users(id),
+	FOREIGN KEY(gs_id) REFERENCES game_sessions(id)
 );
