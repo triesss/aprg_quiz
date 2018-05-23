@@ -20,7 +20,7 @@ gs.addPoint('b');
 
 
 
-gs2 = new GameSession(3,4);
+gs2 = new GameSession(1,4);
 console.log(gs2);
 console.log(gs2.getQuestionIds());
 gs2.save();

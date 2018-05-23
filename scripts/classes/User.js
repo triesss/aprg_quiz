@@ -15,6 +15,7 @@ class User {
             this._age = row.age;
             this._comment = row.comment;
             this._isAdmin = row.is_admin;
+            this._bgimg = row.background_image;
             this._new = false;
         } else if (typeof(id)==='string') {
             this._email = arguments[0];
@@ -46,6 +47,12 @@ class User {
     }
     get image(){
         return this._image;
+    }
+    get bgimg(){
+        return this._bgimg;
+    }
+    set bgimg(bgimg){
+        this._bgimg = bgimg;
     }
     set image(image){
         this._image = image;
@@ -89,8 +96,8 @@ class User {
             stmt.run(this._email,this._username,this._password,this._image,this._age,this._comment);
             this._id = db.prepare(`select id from users where email = "${this._email}" and username = "${this._username}"`).get().id;
         } else if (!this._new) {
-            let stmt = db.prepare(`update users set email = "${this._email}", password = "${this._password}", age = "${this._age}", image = (?), comment = "${this._comment}" where id = ${this._id}`);
-            stmt.run(this._image);
+            let stmt = db.prepare(`update users set email = "${this._email}", password = "${this._password}", age = "${this._age}", image = (?), comment = "${this._comment}", background_image = (?) where id = ${this._id}`);
+            stmt.run(this._image, this._bgimg);
         }
     }
 }
