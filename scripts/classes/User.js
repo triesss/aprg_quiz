@@ -79,6 +79,7 @@ class User {
         return typeof db.prepare("select email from users where email = (?)").get(email) === 'undefined'?false:true;
     }
 	idExists(id){
+        console.log(id);
 		let stmt = db.prepare("select id from users where id = (?)").get(id);
 		return typeof stmt === 'undefined'?false:true;
 	}

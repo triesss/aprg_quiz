@@ -24,8 +24,12 @@ Alex;GameSession-Klasse begonnen;2
 Alex;GameSession-Klasse erweitert;1
 Alex;Users edited + Mittwochsbesprechung;0.5
 Joshua;Mittwochsbesprechung;0.5
+<<<<<<< HEAD
 Benni;Designen der Homepage;4
 Benni;Design der Quizpage und funktion;2.5 std
 Benni;Tutorials gucken und lesen;5
 Benni;Mittwochsbesprechungen;4
 Benni;Tutorials gucken und lesen;1
+=======
+Alex;Game-Klasse;2.5
+>>>>>>> ffedc54fad54edf101d88ff5b863640060f115b3
