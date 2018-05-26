@@ -8,35 +8,51 @@
     <title>Playing...</title>
 </head>
 <body onload="createAnswers()">
-    
-    <div class="answers">
 
-        <!--DAS IST NUR EIN ENTWURF!-->
+    <div class="quizlayout">
+        <h1 class="question" id="frage"></h1>
+        <h3 class="question">Klicke auf eine der 4 Antwortmöglichkeiten!</h3>
+        
+        <div class="answers">
+            
+            <form action="checkAnswers" method="POST">
+                <ul>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer1"></li>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer2"></li>
+                    <br>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer3"></li>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer4"></li>
+                </ul>
+            </form>
 
-        <form action="checkAnswers" method="POST">
-        <ul>
-            <li> <input class="answerbuttons"type="button" type="submit" id="answer1"></li>
-            <li> <input class="answerbuttons"type="button" type="submit" id="answer2"></li>
-            <li> <input class="answerbuttons"type="button" type="submit" id="answer3"></li>
-            <li> <input class="answerbuttons"type="button" type="submit" id="answer4"></li>
-        </ul>
-    </form>
+                <a class="infos">Richtige Antworten: </a>
+                <br>
+                <a class="infos"> Falsche Antworten: </a>
 
+        </div>
     </div>
-
+    
     <script>
         //id = die fragen id aus dem seed
         //let question = new question(id);
 
         function createAnswers() {
             //Macht ein random answerIndex Array
-            let answersIndex = [0, 1, 2 ,3];
+            let answersIndex = ["Antwort1", "Antwort2", "Antwort3", "Antwort4"];
+
+            //Ersetzen durch richtige Funktion:
+            function getQuestion(){
+                return "Dies ist nur eine test Frage";
+            }
+
             answersIndex.sort(function(a, b){return 0.5 - Math.random()});
-            console.log("Buttons werden mit Antworten versehen...");
+            console.log("Frage wird geladen...");
+            document.getElementById('frage').innerHTML = getQuestion();
             document.getElementById('answer1').value = answersIndex[0];
             document.getElementById('answer2').value = answersIndex[1];
             document.getElementById('answer3').value = answersIndex[2];
             document.getElementById('answer4').value = answersIndex[3];
+        
 
         }
     
