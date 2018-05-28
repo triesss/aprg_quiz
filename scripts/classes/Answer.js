@@ -7,7 +7,7 @@ class Answer {
         if (typeof(id)==='number') {
             let row = db.prepare(`select answer, qid, is_true from answers where id = ${id}`).get();
             this._answer = row.answer;
-            this._isTrue = row.is_true;
+            this._isTrue = row.is_true===1?true:false;
             this._qid = row.qid;
             this._new = false;
         } else if (typeof(id)==='string') {
@@ -22,7 +22,7 @@ class Answer {
     get answer(){
         return this._answer;
     }
-    isTrue(){
+    get isTrue(){
         return this._isTrue;
     }
     /**

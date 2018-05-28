@@ -110,6 +110,15 @@ class GameSession {
 		}
 		return Fragen;
 	}
+	determineResult(){
+		if (this._pointsA === this._pointsB) {
+			return 1;
+		} else if(this._pointsA > this._pointsB) {
+			return 2;
+		}else {
+			return 0;
+		}
+	}
 	save(user){
 		if (!this._new) {
 			if (user === 'a') {

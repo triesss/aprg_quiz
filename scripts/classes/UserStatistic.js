@@ -6,7 +6,7 @@ class UserStatistic {
 		if (typeof(id) === 'number') {
 			this._uid = id;
 			let row = db.prepare(`select * from user_statistics where uid = ${this._uid}`).get();
-			console.log(row);
+			//console.log(row);
 			if (typeof(row) === 'undefined') {
 				this.setDefaults(id);
 			}else {
