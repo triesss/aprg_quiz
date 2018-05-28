@@ -59,29 +59,29 @@ class GameSession {
 		if (!this._new) {
 			let stmt = db.prepare('update game_sessions set done = 1 where id = (?)');
 			stmt.run(this._id);
-		}
+		}		
 	}
 	getCurrentQuestion(user){
-		return user === 'a' ? this._questionA : this._questionB;
+		return user === this._userA ? this._questionA : this._questionB;
 	}
 	generateSeed(){
 		let uts = new Date();
 		return Date.now();
 	}
-	addPoint(user){
-		if (user === 'a') {
+	addPoint(uid){
+		if (uid === this._userA.id) {
 			this._pointsA++;
-		}else if (user === 'b') {
+		}else if (uid === this._userB.id) {
 			this._pointsB++;
 		}
 	}
-	getNextQuestion(user){
-		let nxtQst = null;
+	getNextQuestion(uid){
+		let nxtQst = null;		
 		let qArr = this.getQuestionIds();
 		if (this._new) {
 			return new Question(qArr[0],true);
 		}
-		let curQst = user === 'a' ? this._questionA.id : this._questionB.id;
+		let curQst = uid === this._userA.id ? this._questionA.id : this._questionB.id;
 		for (var i = 0; i < qArr.length; i++) {
 			if (curQst === qArr[i] && i != qArr.length) {
 				nxtQst = new Question(qArr[i+1],true);
@@ -119,14 +119,14 @@ class GameSession {
 			return 0;
 		}
 	}
-	save(user){
+	save(uid){
 		if (!this._new) {
-			if (user === 'a') {
+			if (uid === this._userA.id) {
 				let stmt = db.prepare(`update game_sessions set ua_current_question = (?),ua_points = (?) where id = ${this._id}`);
-				stmt.run(this._questionA != null?this._questionA.id : -1,this._pointsA);
-			}else if (user === 'b') {
+				stmt.run(Object.keys(this._questionA).length !== 0?this._questionA.id : -1,this._pointsA);
+			}else if (uid === this._userB.id) {
 				let stmt = db.prepare(`update game_sessions set ub_current_question = (?),ub_points = (?) where id = ${this._id}`);
-				stmt.run(this._questionB != null?this._questionB.id : -1,this._pointsB);
+				stmt.run(Object.keys(this._questionB).length !== 0?this._questionB.id : -1,this._pointsB);
 			}
 		}else if (this._new) {
 			let stmt = db.prepare(`insert into game_sessions(seed,ua_id,ua_current_question,ub_id,ub_current_question) values (?,?,?,?,?)`);

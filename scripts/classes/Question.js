@@ -48,7 +48,7 @@ class Question {
     }
 	count(){
 		var row = db.prepare('SELECT count(*) as anz from questions').get();
-		return row.anz;
+		return row.anz-1;
 	}
 }
 

@@ -66,6 +66,10 @@ class UserStatistic {
 	userStatisticExists(uid){
 		return db.prepare(`select count(*) as anz from user_statistics where uid = ${uid}`).get().anz === 1?true:false;
 	}
+	calcPoints(uid){
+		let get = db.prepare('select wins, draws from user_statistics where id = (?)').get(uid);
+		return (get.wins * 2) + get.draws;
+	}
 	save(){
 		if (!this._new) {
 			let stmt = db.prepare(`update user_statistics set wins = (?),loses = (?), draws = (?) where id = ${this._id}`);
