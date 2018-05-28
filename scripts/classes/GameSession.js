@@ -123,6 +123,7 @@ class GameSession {
 			let stmt = db.prepare(`insert into game_sessions(seed,ua_id,ua_current_question,ub_id,ub_current_question) values (?,?,?,?,?)`);
 			stmt.run(this._seed,this._userA.id,this._questionA.id,this._userB.id,this._questionB.id);
 			this._id = db.prepare(`select id from game_sessions where seed = (?) and ua_id = (?) and ub_id = (?)`).get(this._seed,this._userA.id,this._userB.id).id;
+			this._new = false;
 		}
 	}
 }

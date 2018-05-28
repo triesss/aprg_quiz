@@ -10,12 +10,12 @@ Alex;Klassenfunktion save() erstellt;1
 Joshua;Mittwochsbesprechung;1
 Joshua;Mittwochsbesprechung;1
 Joshua;Mittwochsbesprechung;1
-Joshua;Menüleiste;1,5
+Joshua;Menüleiste;1.5
 Joshua;file upload;2
 Joshua;profile einrichten;2
 Joshua;server einrichten;3
 Joshua;Login/register;2
-Alex;User-Klasse;2,5
+Alex;User-Klasse;2.5
 Alex;Mittwochsbesprechung;4
 Joshua;Mittwochsbesprechung;4
 Alex;UserStatistic-Klasse;1
@@ -25,10 +25,11 @@ Alex;GameSession-Klasse erweitert;1
 Alex;Users edited + Mittwochsbesprechung;0.5
 Joshua;Mittwochsbesprechung;0.5
 Benni;Designen der Homepage;4
-Benni;Design der Quizpage und funktion;2,5
+Benni;Design der Quizpage und funktion;2.5
 Benni;Tutorials gucken und lesen;5
 Benni;Mittwochsbesprechungen;4
 Benni;Tutorials gucken und lesen;1
-Alex;Game-Klasse;2,5
-benni;online kurse und tutorials;2
-benni;quizscreen designt;3
+Alex;Game-Klasse;2.5
+Benni;online kurse und tutorials;2
+Benni;quizscreen designt;3
+Alex;Games-Klasse editiert;0.5

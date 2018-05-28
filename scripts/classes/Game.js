@@ -22,6 +22,9 @@ class Game{
             break;
         }
     }
+    get userA(){
+        return this._userA;
+    }
     get userB(){
         return this._userB;
     }
@@ -39,8 +42,6 @@ class Game{
     }
     initGameSession(){
         let gs = new GameSession(this._userA.id,this._userB.id);
-        gs.save();
-        return gs.id;
     }
     initGame(user){
         let game = new Game(user,true);
@@ -48,13 +49,11 @@ class Game{
         return game;
     }
     userIsDone(user){
-        let update = "";
         if (user === this._userA.id) {
-            update = db.prepare('update games set ua_done = 1 where id = (?)');
+            this._userADone = true;
         } else if (user === this._userB.id) {
-            update = db.prepare('update games set ub_done = 1 where id = (?)');
+            this._userBDone = true;
         }
-        update.run(this._id);
     }
     initGameExists(){
         return db.prepare('select count(*) as anz from games where ub_id is null').get().anz === 1?true:false;
@@ -71,8 +70,8 @@ class Game{
                 this._new = false;
                 break;
             case false:
-                let update = db.prepare('update games set ub_id = (?), gs_id = (?) where id = (?)');
-                update.run(this._userB.id,this._gameSession.id,this._id);
+                let update = db.prepare('update games set ub_id = (?), gs_id = (?), ua_done = (?), ub_done = (?) where id = (?)');
+                update.run(this._userB.id,this._gameSession.id,this._id,this._userADone===true?1:0,this._userBDone===true?1:0);
                 break;
         }
     }
