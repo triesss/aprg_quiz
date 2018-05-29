@@ -1,51 +1,45 @@
-*{
-    margin: 0;
-    padding: 0;
-    background-color: white;
-}
-#wrapper{
-    width:1300px;
-    margin:auto;
-}
-#banner{
-    
-    overflow: hidden;
-    margin: 0px;
+body {
+    background-color: rgb(223, 223, 223);
+    font-weight: 600;
+    font-family: Helvetica, sans-serif;
 }
 
-#register{
+input[type="text"], input[type="password"]
+{
+    border: none;
+    border-bottom: 1px solid rgb(226, 125, 57);
+    background: transparent;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+p {
+    margin: 0em 1em 0.3em 0em;
+}
+
+.login, .register {
     float: left;
-    margin-top: 100px;
-    width:600px;
-    height:500px;
-    
-}
-h1{
-    
-    margin-left: 25%;
+    position: relative;
+    margin: 4em 6em;
+    padding-right: 0.7em;
 }
 
-button{
-    margin-top: 15px;
-    width: 40px;
+button[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 80px;
+    background: rgb(226, 125, 57);
+    color: #fff;
+    font-size: 18px;
+    border-radius: 3px;
+    transition: 0.25s;
 }
-#login{
-    background-color: white;
-    float:right;
-    margin-top: 100px;
-    width:600px;
-    height: 200px;
+button[type="submit"]:hover
+{
+    cursor: pointer;
+    background: rgb(250, 181, 135);
+    color: #000;
 }
-
-
-
-form{
-
-    margin-top: 30px;
-    margin-left: 20%;
-}
-
-textarea{
-    margin-top: 15px;
-}
-
