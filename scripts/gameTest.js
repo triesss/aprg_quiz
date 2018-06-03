@@ -1,7 +1,7 @@
 const Game = require('./classes/Game');
 const UserStatistic = require('./classes/UserStatistic');
 
-game = new Game(1,false);
+/*game = new Game(1,false);
 console.log(game.gameSession.getQuestionIds());
 
 //UserA beantwortet seine Fragen und gibt random (i) Antworten
@@ -66,6 +66,7 @@ console.log("Punkte UserB:"+UserStatistic.prototype.calcPoints(game.userB.id));
 
 console.log(Game.prototype.getGameIdOfUser(game.userA.id));
 console.log(Game.prototype.getGameIdOfUser(6));
+*/
 //console.log(Game.prototype.initGameExists());
 // newGame = Game.prototype.initGame(3);
 // console.log(newGame);
@@ -79,3 +80,17 @@ console.log(Game.prototype.getGameIdOfUser(6));
 //     initgame.save();
 // }
 // console.log(Game.prototype.initGameExists());
+
+
+
+console.log(Game.prototype.initGameExists());
+console.log(Game.prototype.getGameIdOfUser(1));
+console.log(Game.prototype.getInitGameId());
+
+game = new Game(Game.prototype.getGameIdOfUser(1),false);
+//game.save();
+game.userB = 2;
+game.initGameSession();
+game.gameSession.save();
+game.save();
+console.log(game);

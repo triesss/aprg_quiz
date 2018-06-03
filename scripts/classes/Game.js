@@ -47,7 +47,7 @@ class Game{
         this._gameSession = new GameSession(gs);
     }
     initGameSession(){
-        let gs = new GameSession(this._userA.id,this._userB.id);
+        this._gameSession = new GameSession(this._userA.id,this._userB.id);
     }
     initGame(user){
         let game = new Game(user,true);
