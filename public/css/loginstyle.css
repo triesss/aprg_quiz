@@ -3,6 +3,14 @@ body {
     font-weight: 600;
     font-family: Helvetica, sans-serif;
 }
+#banner{
+    background-position:center;
+    background:  no-repeat;
+    background-size: contain;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0px;
+}
 
 input[type="text"], input[type="password"]
 {

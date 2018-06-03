@@ -9,7 +9,10 @@
     margin:auto;
 }
 #banner{
-    
+    background-position:center;
+    background:  no-repeat;
+    background-size: contain;
+    max-width: 100%;
     overflow: hidden;
     margin: 0px;
 }
