@@ -3,4 +3,6 @@ db/a\.sql
 scripts/node_modules/*
 protoAPRG4/node_modules/
 scripts/old/
-
+old/
+node_modules/
+package-lock.json
