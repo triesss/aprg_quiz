@@ -1,4 +1,6 @@
 
 db/a\.sql
-scripts/node_modules/
+scripts/node_modules/*
 protoAPRG4/node_modules/
+scripts/old/
+
