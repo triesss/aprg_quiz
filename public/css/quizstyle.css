@@ -6,6 +6,11 @@ body{
     background-color: rgb(212, 212, 212);
 }
 
+#banner{
+    width:1700px;
+    height:200px;
+    
+}
 .answers li{
     list-style-type: none;
     display: inline-block;

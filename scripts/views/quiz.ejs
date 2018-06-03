@@ -8,23 +8,21 @@
     <title>Playing...</title>
 </head>
 <body onload="startGame()">
-        <%= game %>
-
-        <img id="banner" src="images/duellquizbanner.png">
+    <img id="banner" src="images/duellquizbanner.png">        
 
     <div class="quizlayout">
-        <h1 class="question" id="frage"></h1>
+        <h1 class="question" id="frage"><%= question %></h1>
         <h3 class="question">Klicke auf eine der 4 Antwortmöglichkeiten!</h3>
         
         <div class="answers">
             
-            <form action="checkAnswers" method="POST">
+            <form action="/checkAnswers" method="POST">
                 <ul>
-                    <li> <input class="answerbuttons" type="button" type="submit" id="answer1"></li>
-                    <li> <input class="answerbuttons" type="button" type="submit" id="answer2"></li>
+                    <li> <button class="answerbuttons"  type="submit" id="answer1"><%= ans1 %></button></li>
+                    <li> <button class="answerbuttons" type="submit" id="answer2"><%= ans2 %></button></li>
                     <br>
-                    <li> <input class="answerbuttons" type="button" type="submit" id="answer3"></li>
-                    <li> <input class="answerbuttons" type="button" type="submit" id="answer4"></li>
+                    <li> <button class="answerbuttons" type="submit" id="answer3"><%= ans3 %></button></li>
+                    <li> <button class="answerbuttons" type="submit" id="answer4"><%= ans4 %></button></li>
                 </ul>
             </form>
 

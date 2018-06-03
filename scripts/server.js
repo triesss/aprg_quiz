@@ -214,18 +214,26 @@ app.get('/start',function(req,res){
 
 
 app.post('/startgame',function(req,res){
-	if (Game.prototype.getGameIdOfUser(userID) === -1){
+	if (Game.prototype.getGameIdOfUser(userID) === -1 && !Game.prototype.initGameExists()){
 		
 		//if (gameidOfUser=== initGameiD)
 		res.redirect('/newGame');
 	}
+	else if(Game.prototype.initGameExists()){ 
+		let game = new Game(Game.prototype.getInitGameId(),false);
+		game.userB = userID;
+		game.initGameSession();
+		game.gameSession.save();
+		game.save();
+		res.redirect('/oldgame?gameID='+game.id);
+	}
 	else{
-		res.redirect('/oldGame');
+		let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+		res.redirect('/oldgame?gameID='+game.id);
 	}
 });	
 	
 app.get('/newGame',function(req,res){
-	console.log(1);
 	Game.prototype.initGame(userID);
 	res.render('quiz',{
 		game: game.id
@@ -233,11 +241,15 @@ app.get('/newGame',function(req,res){
 });	
 	
 app.get('/oldGame',function(req,res){
-	console.log(2);
-	let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+	let game = new Game(req.query.gameID,false);
+	console.log(game.gameSession.questionA.answers[3].answer);
 	
 	res.render('quiz',{
-	game: game.id
+	question: game.gameSession.questionA.question,
+	ans1: game.gameSession.questionA.answers[0].answer,
+	ans2: game.gameSession.questionA.answers[1].answer,
+	ans3: game.gameSession.questionA.answers[2].answer,
+	ans4: game.gameSession.questionA.answers[3].answer
 	});
 	
 	
