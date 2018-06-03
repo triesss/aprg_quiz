@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/quizstyle.css" type="text/css" rel="stylesheet">
+    <title>Playing...</title>
+</head>
+<body onload="startGame()">
+        <%= game %>
+
+        <img id="banner" src="images/duellquizbanner.png">
+
+    <div class="quizlayout">
+        <h1 class="question" id="frage"></h1>
+        <h3 class="question">Klicke auf eine der 4 Antwortmöglichkeiten!</h3>
+        
+        <div class="answers">
+            
+            <form action="checkAnswers" method="POST">
+                <ul>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer1"></li>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer2"></li>
+                    <br>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer3"></li>
+                    <li> <input class="answerbuttons" type="button" type="submit" id="answer4"></li>
+                </ul>
+            </form>
+
+                <a class="infos">Richtige Antworten: </a>
+                <br>
+                <a class="infos"> Falsche Antworten: </a>
+
+        </div>
+    </div>
+    
+    <script>
+        //id = die fragen id aus dem seed
+        //let question = new question(id);
+
+    function startGame(){
+        
+        console.log();
+    }
+
+        function createAnswers() {
+            //Macht ein random answerIndex Array
+            let answersIndex = ["Antwort1", "Antwort2", "Antwort3", "Antwort4"];
+
+            //Ersetzen durch richtige Funktion:
+            function getQuestion(){
+                return "Dies ist nur eine test Frage";
+            }
+
+            if (game.User.id === 1){
+                game.gameSession.questionA.answers.sort(function(a, b){return 0.5 - Math.random()});
+                console.log("Fragen für UserA werden geladen...");
+                document.getElementById('frage').innerHTML = game.gameSession.questionA.question();
+                document.getElementById('answer1').value = game.gameSession.questionA.answers[0];
+                document.getElementById('answer2').value = game.gameSession.questionA.answers[1];
+                document.getElementById('answer3').value = game.gameSession.questionA.answers[2];
+                document.getElementById('answer4').value = game.gameSession.questionA.answers[3];
+            }
+
+            else if(game.User.id === 2){
+                game.gameSession.questionB.answers.sort(function(a, b){return 0.5 - Math.random()});
+                console.log("Fragen für UserB werden geladen...");
+                document.getElementById('frage').innerHTML = game.gameSession.questionB.question();
+                document.getElementById('answer1').value = game.gameSession.questionB.answers[0];
+                document.getElementById('answer2').value = game.gameSession.questionB.answers[1];
+                document.getElementById('answer3').value = game.gameSession.questionB.answers[2];
+                document.getElementById('answer4').value = game.gameSession.questionB.answers[3];
+            }else {console.log("Es ist ein Fehler aufgetreten (UserID not found...)");}
+        
+        }
+    
+    </script>
+
+
+</body>
+</html>

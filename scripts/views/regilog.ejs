@@ -8,30 +8,28 @@
 <body>
     
     <div id="wrapper">
-            <img id="banner" src="images/duellquizbanner.png">
+    <div id="banner"> <img src="images/duellquizbanner.jpg"> </div>
     
-    <div class="register">
+    <div id="register">
     
         <h1>Registration</h1>
-        <hr>
         <br><p><%= typeof message1 != 'undefined' ? message1 : '' %></p>
     <form action="/register" method="post">
-        <br> <p> Username <input type="text" name="username" placeholder="Enter Username" maxlength="12"></p>
-        <br> <p> Password <input type="password" name="password" placeholder="Enter Password" maxlength="12"></p>
-        <br> <p> E-mail <input type="text" placeholder="Enter E-Mail Adress" name="email"></p>
+        <br> <p><input type="text" name="username" maxlength="12"> Username </p>
+        <br> <p><input type="password" name="password" maxlength="12"> Password </p>
+        <br> <p><input type="text" name="email"> E-mail </p>
         <br><button type="submit">Send</button>
         </form>
     </div>
     
-    <div class="login">
+    <div id="login">
     
         <h1>Login</h1>
-        <hr>
         <br><p><%= typeof message2 != 'undefined' ? message2 : '' %></p>
         <form action="/login" method="post">
-            <p> Username <input type="text" name="username" placeholder="Enter Username" maxlength="12"></p>
-            <br><p> Password <input type="password" name="password" placeholder="Enter Password" maxlength="12"></p>
-            <br><button type="submit">Login</button>
+            <p><input type="text" name="username" maxlength="12"> Username </p>
+           <br> <p><input type="password" name="password" maxlength="12"> Password </p>
+            <br><button class="logbutton" type="submit">Login</button>
         
         </form>
     

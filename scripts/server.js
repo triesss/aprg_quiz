@@ -7,6 +7,7 @@ app.engine('.ejs', require('ejs').__express);
 app.set('view engine', 'ejs');
 const path = require('path');
 const User = require('./classes/User');
+const Game = require('./classes/Game');
 const Statistic = require('./classes/UserStatistic');
 
 
@@ -108,8 +109,7 @@ app.post('/register',function(req,res){
 	}
 });
 	
-	
-					
+		
 	let comment;
 	let age;
 	let wins;
@@ -127,13 +127,14 @@ app.post('/register',function(req,res){
 			req.session['authenticated'] = true;
 				name = user;
 				console.log("Login sucessfull");
-				res.redirect('/profile'); //sobald home eingerichtet ist dann darauf weiterverlinken
 				userID = User.prototype.idOfUsername(name);
 				let stats = new Statistic(userID);
 				stats.save();
 				wins = stats.wins;
 				loses = stats.loses;
 				draws = stats.draws;
+				res.redirect('/profile');
+				
 			
 		}
 		
@@ -152,8 +153,8 @@ app.post('/register',function(req,res){
 		
 	
 
-
-	let zahl = 1; //für die Titelbilder 1-5 siehe /changecover
+	
+	let zahl; //für die Titelbilder 1-5 siehe /changecover
 	let im; // diese variable bekommt den namen des profilbildes 
 	
 	app.get('/profile', function(req,res){
@@ -163,23 +164,30 @@ app.post('/register',function(req,res){
 			
 			
 		let user2 = new User(userID);
-		
-		if(user2.age != null){
-		age = user2.age;
+		zahl = user2.bgimg;
+		if(user2.age === null){
+		age = '  ';
 		}
-		if(user2.comment != null){
-		comment = user2.comment;
+		
+		else{
+			age = user2.age;
+		}
+		if(user2.comment === null){
+		comment = '  ';
+		}
+		else{
+			comment = user2.comment;
 		}
 			
 		
-			// Dieser Ausschnitt wird zuerst abgespielt, deswegen alles so umständlich
+			
 			if (user2.image === null){
 				console.log("dritter");
 			user2.image = 'nopb.jpg';
 			}
 			console.log(user2);
 			res.render('profile',{
-							// die entsprechenden Pfade fürs Profilbild und Titelbild
+			// die entsprechenden Pfade fürs Profilbild und Titelbild
 			profile: `uploads/${user2.image}`,
 			cover: `images/titelbild${zahl}.jpg`,
 			user: name ,
@@ -196,8 +204,44 @@ app.post('/register',function(req,res){
 	}else{
 		res.render('error', {message: "You have to log in first"});
 	}
-	}); 
+	});
+
+
+app.get('/start',function(req,res){
 	
+	res.render('start');
+});
+
+
+app.post('/startgame',function(req,res){
+	if (Game.prototype.getGameIdOfUser(userID) === -1){
+		
+		//if (gameidOfUser=== initGameiD)
+		res.redirect('/newGame');
+	}
+	else{
+		res.redirect('/oldGame');
+	}
+});	
+	
+app.get('/newGame',function(req,res){
+	console.log(1);
+	Game.prototype.initGame(userID);
+	res.render('quiz',{
+		game: game.id
+	});
+});	
+	
+app.get('/oldGame',function(req,res){
+	console.log(2);
+	let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+	
+	res.render('quiz',{
+	game: game.id
+	});
+	
+	
+});	
 
 //weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
@@ -236,12 +280,14 @@ app.post('/upload', function(req,res){
 
 //Änderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
 app.post('/changecover',function(req,res){
-		if (zahl < 5){
-		zahl += 1;
+		let user = new User(userID);
+		if (user.bgimg < 5){
+		user.bgimg += 1;
 		}
 		else{
-			zahl = 1;
+			user.bgimg = 1;
 		}
+		user.save();
 		res.redirect('/profile');
 		
 	});
@@ -264,5 +310,11 @@ app.get('/logout',function(req,res){
 	delete req.session['authenticated'];
 	res.redirect('/');
 	
+});
+
+app.get('/quiz', function(req, res){
+	
+	console.log('game');
+	res.render('quiz', {game: game.id});
 });
 

@@ -6,15 +6,6 @@ body{
     background-color: rgb(212, 212, 212);
 }
 
-#banner{
-    background-position:center;
-    background:  no-repeat;
-    background-size: contain;
-    max-width: 100%;
-    overflow: hidden;
-    margin: 0px;
-}
-
 .answers li{
     list-style-type: none;
     display: inline-block;

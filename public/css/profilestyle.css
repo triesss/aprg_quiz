@@ -9,10 +9,7 @@
     margin:auto;
 }
 #banner{
-    background-position:center;
-    background:  no-repeat;
-    background-size: contain;
-    max-width: 100%;
+    
     overflow: hidden;
     margin: 0px;
 }
@@ -152,4 +149,23 @@
 
 #titelbild form:hover{
     border:solid white 3px;
+}
+
+.answerbuttons{
+    position: absolute;
+    top: 400px;
+    left:600px;
+    background-color: rgba(255, 255, 255, 0.13);
+    color: rgb(211, 103, 32);
+    font-size: 2em;
+    border-radius: 10px;
+    border: solid 1px;
+    border-color: rgb(0, 0, 0);
+    padding: 2em 4em;
+    transition: 0.5s;
+}
+
+.answerbuttons:hover{
+    color:blue;
+    background-color: gray;
 }
