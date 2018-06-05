@@ -16,15 +16,15 @@
         
         <div class="answers">
             
-            <!-- <form action="/checkAnswers" method="POST"> -->
+            <form action='/checkAnswers' method="POST">
                 <ul>
-                    <li> <button class="answerbuttons" onclick="checkAnswers(this.value)" value="0" type="submit" id="answer1"><%= ans1 %></button></li>
-                    <li> <button class="answerbuttons" onclick="checkAnswers(this.value)" value="1" type="submit" id="answer2"><%= ans2 %></button></li>
+                    <li> <button name="ans" class="answerbuttons" onclick="checkAnswers(this.value)" value="0" type="submit" id="answer1"><%= ans1 %></button></li>
+                    <li> <button name="ans" class="answerbuttons" onclick="checkAnswers(this.value)" value="1" type="submit" id="answer2"><%= ans2 %></button></li>
                     <br>
-                    <li> <button class="answerbuttons" onclick="checkAnswers(this.value)" value="2" type="submit" id="answer3"><%= ans3 %></button></li>
-                    <li> <button class="answerbuttons" onclick="checkAnswers(this.value)" value="3" type="submit" id="answer4"><%= ans4 %></button></li>
+                    <li> <button name="ans" class="answerbuttons" onclick="checkAnswers(this.value)" value="2" type="submit" id="answer3"><%= ans3 %></button></li>
+                    <li> <button name="ans" class="answerbuttons" onclick="checkAnswers(this.value)" value="3" type="submit" id="answer4"><%= ans4 %></button></li>
                 </ul>
-            <!-- </form> -->
+            </form>
 
                 <a class="infos">Richtige Antworten: </a>
                 <br>
