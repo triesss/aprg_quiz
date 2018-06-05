@@ -68,6 +68,10 @@ class Game{
         let get = db.prepare('select id from games where (ua_id = (?) AND ua_done = 0) OR (ub_id = (?) AND ub_done = 0) ').get(uid,uid);
         return typeof(get) === 'undefined' ? -1 : get.id;
     }
+    getGameIdOfEnemy(uid){
+        let get = db.prepare('select id from games where (ua_id = (?) AND ub_done = 0) OR (ub_id = (?) AND ua_done = 0) ').get(uid,uid);
+        return typeof(get) === 'undefined' ? -1 : get.id;
+    }
     initGameExists(){
         return db.prepare('select count(*) as anz from games where ub_id is null').get().anz === 1?true:false;
     }

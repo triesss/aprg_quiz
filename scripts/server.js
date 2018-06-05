@@ -227,12 +227,25 @@ app.get('/start',function(req,res){
 
 
 app.post('/startgame',function(req,res){
-	if (Game.prototype.getGameIdOfUser(userID) === -1 && !Game.prototype.initGameExists()){
+	if (Game.prototype.getGameIdOfEnemy(userID) === -1 && Game.prototype.getGameIdOfUser(userID) === -1 && !Game.prototype.initGameExists()){
 		
 		//if (gameidOfUser=== initGameiD)
 		res.redirect('/newGame');
 	}
+	else if(Game.prototype.getGameIdOfUser(userID) !== -1){
+		if (Game.prototype.initGameExists()) {
+			if (Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()) {
+				let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+				req.session['gameID'] = game.id;
+				res.redirect('/oldgame?gameID='+game.id);
+			}else{
+				res.render('enemyerror', {'message': "Warte bis dein Gegner gefunden wurde..."});
+			}
+		}
+
+	}
 	else if(Game.prototype.initGameExists()){ 
+		if(Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()){
 		let game = new Game(Game.prototype.getInitGameId(),false);
 		req.session['gameID'] = game.id;
 		game.userB = userID;
@@ -240,11 +253,13 @@ app.post('/startgame',function(req,res){
 		game.gameSession.save();
 		game.save();
 		res.redirect('/oldgame?gameID='+game.id);
+		}
+		else{
+			res.render('enemyerror', {'message': "Warte bis dein Gegner gefunden wurde..."});
+		}
 	}
-	else{
-		let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
-		req.session['gameID'] = game.id;
-		res.redirect('/oldgame?gameID='+game.id);
+	else if(Game.prototype.getGameIdOfEnemy(userID) !== -1){
+		res.render('enemyerror', {'message': "Warte bis dein Gegner fertig ist..."});
 	}
 });	
 	
@@ -319,39 +334,30 @@ app.post('/checkAnswers',function(req,res){
 	
 	let game = new Game (req.session['gameID'],false);
 	let answ = req.body["ans"];
-	console.log(answ);
-	console.log(game.gameSession.questionA.answers[0].answer);
-	console.log(game.gameSession.questionA.answers[answ].answer);
-	console.log(req.session[answ]);
 	let givenAnswerA = req.session[answ];
 	let givenAnswerB = req.session[answ];
-	let correct_answerA = game.gameSession.questionA.answers[0].answer;
-	let correct_answerB = game.gameSession.questionB.answers[0].answer;
-	
+	let correct_answerA = null;
+	let correct_answerB = "Test";
+	console.log(game);
+
+	if(Object.keys(game.gameSession.questionA).length !== 0 && game.gameSession.questionA.id !== -1){
+	 	correct_answerA = game.gameSession.questionA.answers[0].answer;
+	}
+	if(Object.keys(game.gameSession.questionB).length !== 0 && game.gameSession.questionB.id !== -1){
+		correct_answerB = game.gameSession.questionB.answers[0].answer;
+	}
+		console.log("++++++++++++++++++++" + correct_answerB);
+
+	/*
 	console.log(game.gameSession.questionB.answers[0].answer);
-	
 	console.log("givenanswerA: " + givenAnswerA);
 	console.log("givenanswerB: " + givenAnswerB);
 	console.log("dies: " +Object.keys(game.gameSession.questionA).length);
 	console.log("das: " +Object.keys(game.gameSession.questionA));
 	console.log("jenes: " +correct_answerA);
-	
-	if (Object.keys(game.gameSession.questionA).length !== 0){
-		console.log("nicht doch");
-	let correct_answerA = game.gameSession.questionA.answers[0].answer;
-	}
-	else {
-		console.log("oh doch");
-		correct_answerA = 0;
-	}
-		
-	if (game.gameSession.questionB.answers.length !== 0){
-		console.log(game.gameSession.questionB);
-	let correct_answerB = game.gameSession.questionB.answers[0].answer;
-	}
-	else{
-		correct_answerB = 0;
-	}
+
+	*/
+
 	/*
 	console.log("----------------" + givenAnswerA);
 	console.log("---------------- " + correct_answerA);
@@ -386,6 +392,7 @@ app.post('/checkAnswers',function(req,res){
 		}
 		
 		if(game.gameSession.getNextQuestion(game.userA.id) !== null){
+
 			game.gameSession.questionA = game.gameSession.getNextQuestion(game.userA.id);
 			game.gameSession.save(game.userA.id);
 			res.redirect('/oldgame');
