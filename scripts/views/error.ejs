@@ -1,6 +1,18 @@
 <!DOCTYPE html><html>
 
 <head>
+	<style>
+		#ErrorMessage{
+			text-align: center;
+			font-size: 50px;
+			font-weight: 700;
+		}
+		h3{
+			margin-top: 1em;
+			color: darkred;
+		}
+	
+	</style>
     
      <link href="css/loginstyle.css" rel="stylesheet" type="text/css">
 </head>
@@ -8,11 +20,13 @@
 <body>
     
     <div id="wrapper">
-    <div id="banner"> <img src="images/duellquizbanner.png"> </div>
+    <img id="banner" src="images/duellquizbanner.png">
     <br>
+	<div id="ErrorMessage">
     <h3><%= message %> </h3>
     <br>    
     <a href="/">Register/Login</a>
+	</div>
     </div>    
     
 </body>    

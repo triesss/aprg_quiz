@@ -1,7 +1,11 @@
 *{
     margin: 0;
     padding: 0;
-    background-color: hsla(200, 4%, 70%, 0.555)
+}
+
+body{
+	background-color: rgb(223, 223, 223);
+	font-family: Helvetica, sans-serif;
 }
 
 #wrapper{
@@ -9,13 +13,19 @@
     margin:auto;
 }
 #banner{
-    
+    background-position:center;
+    background:  no-repeat;
+    background-size: contain;
+	max-size: 60%;
+    max-width: 100%;
     overflow: hidden;
     margin: 0px;
 }
 
+
 #menü{
-    margin-top: 0px;
+    margin-top: -5px;
+	background-color: rgb(204, 204, 204);
 }
 
 #menü ul{
@@ -152,16 +162,15 @@
 }
 
 .answerbuttons{
-    position: absolute;
-    top: 400px;
-    left:600px;
+    position: relative;
+	left: 35%;
     background-color: rgba(255, 255, 255, 0.13);
     color: rgb(211, 103, 32);
     font-size: 2em;
     border-radius: 10px;
     border: solid 1px;
     border-color: rgb(0, 0, 0);
-    padding: 2em 4em;
+    padding: 1.5em 2em;
     transition: 0.5s;
 }
 

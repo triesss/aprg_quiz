@@ -3,14 +3,18 @@
     padding: 0px;
 }
 body{
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(223, 223, 223);
 }
 
 #banner{
-    width:1700px;
-    height:200px;
-    
+    background-position:center;
+    background:  no-repeat;
+    background-size: contain;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0px;
 }
+
 .answers li{
     list-style-type: none;
     display: inline-block;
