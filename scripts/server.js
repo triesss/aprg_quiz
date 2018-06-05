@@ -10,6 +10,15 @@ const User = require('./classes/User');
 const Game = require('./classes/Game');
 const Statistic = require('./classes/UserStatistic');
 
+/*
+if(Game.prototype.initGameExists()){
+	let game = new Game (Game.prototype.getInitGameId(),false);
+}
+else{
+	let game = new Game (Game.prototype.getInitGameId(),true);
+}
+
+*/
 
 
 const session = require('express-session');
@@ -252,8 +261,18 @@ let gameId;
 app.get('/oldGame',function(req,res){
 	let game = new Game(req.query.gameID,false);
 	if(userID === game.userA.id){
+
+	//erstellt 2 neue Arrays, in welchen die Antworten durchgewürfelt werden
 	let newAnswerArrayA = game.gameSession.questionA.answers;
+	let newAnswerArrayB = game.gameSession.questionB.answers;
 	newAnswerArrayA.sort(function(a, b){return 0.5 - Math.random()});
+	newAnswerArrayB.sort(function(a, b){return 0.5 - Math.random()});
+
+	req.session[0] = newAnswerArrayA[0].answer;
+    req.session[1] = newAnswerArrayA[1].answer;
+    req.session[2] = newAnswerArrayA[2].answer;
+    req.session[3] = newAnswerArrayA[3].answer;
+
 	console.log(game.gameSession.questionA.answers[3].answer);
 	gameId = req.query.gameID;
 	console.log("gameid: " + gameId);
@@ -287,33 +306,34 @@ app.post('/checkAnswers',function(req,res){
 	console.log(game.gameSession.questionA.answers[0].answer);
 	console.log(game.gameSession.questionA.answers[answ].answer);
 	
+	let givenAnswerA = req.session[answ];
+	let givenAnswerB = req.session[answ];
+	let correct_answerA = game.gameSession.questionA.answers[0].answer;
+	let correct_answerB = game.gameSession.questionB.answers[0].answer;
+
+	console.log("----------------" + givenAnswerA);
+	console.log("---------------- " + correct_answerA);
+
+
 	if(userID === game.userA.id){
-		let correct_answerA = game.gameSession.questionA.answers[0].answer;
 				
-		if (answ === correct_answerA){
-			alert('Funktioniert');
+		if (givenAnswerA == correct_answerA){
+			console.log('Richtige Antwort');
 		}
 		else{
-			alert('Falsche Antwort!')
+			console.log('Falsche Antwort!');
 		}
 	}
 	
 	if(userID === game.userB.id){
-	let correct_answerB = game.gameSession.questionB.answers[0].answer;
 				
-		if (answ === correct_answerB){
-			alert('Funktioniert');
+		if (givenAnswerB == correct_answerB){
+			console.log('Richtige Antwort');
 		}
 		else{
-			alert('Falsche Antwort!')
+			console.log('Falsche Antwort!');
 		}
 	}
-	
-
-
-const quizB = require('/views/quiz');
-
-
 
 	
 	if(game.gameSession.getNextQuestion(game.userA.id) !== null){}
