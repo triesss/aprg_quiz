@@ -22,6 +22,9 @@ class Game{
             break;
         }
     }
+	get id(){
+		return this._id;
+	}
     get userA(){
         return this._userA;
     }
@@ -81,7 +84,7 @@ class Game{
                 break;
             case false:
                 let update = db.prepare('update games set ub_id = (?), gs_id = (?), ua_done = (?), ub_done = (?) where id = (?)');
-                update.run(this._userB.id,this._gameSession.id,this._id,this._userADone===true?1:0,this._userBDone===true?1:0);
+                update.run(this._userB.id,this._gameSession.id,this._userADone===true?1:0,this._userBDone===true?1:0,this._id);
                 break;
         }
     }
