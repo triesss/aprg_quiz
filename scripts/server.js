@@ -70,7 +70,7 @@ function checkFileType(file, cb){
 
 
 
-// Public Folder (für css bilder usw)
+// Public Folder (fÃ¼r css bilder usw)
 app.use(express.static('../public'));
 
 app.get('/',function(req,res){
@@ -129,7 +129,7 @@ app.post('/register',function(req,res){
 	let loses;
 	let draws;
 	let userID;	
-	let name; //globale variable für den username
+	let name; //globale variable fÃ¼r den username
 	app.post('/login',function(req,res){
 	
 	const user = req.body['username'];
@@ -167,7 +167,7 @@ app.post('/register',function(req,res){
 	
 
 	
-	let zahl; //für die Titelbilder 1-5 siehe /changecover
+	let zahl; //fÃ¼r die Titelbilder 1-5 siehe /changecover
 	let im; // diese variable bekommt den namen des profilbildes 
 	
 	app.get('/profile', function(req,res){
@@ -200,7 +200,7 @@ app.post('/register',function(req,res){
 			}
 			console.log(user2);
 			res.render('profile',{
-			// die entsprechenden Pfade fürs Profilbild und Titelbild
+			// die entsprechenden Pfade fÃ¼rs Profilbild und Titelbild
 			profile: `uploads/${user2.image}`,
 			cover: `images/titelbild${zahl}.jpg`,
 			user: name ,
@@ -263,10 +263,10 @@ app.get('/newGame',function(req,res){
 
 let gameId;	
 app.get('/oldGame',function(req,res){
-	let game = new Game(req.query.gameID,false);
+	let game = new Game(req.session['gameID'],false);
 	if(userID === game.userA.id){
 
-	//erstellt 2 neue Arrays, in welchen die Antworten durchgewürfelt werden
+	//erstellt 2 neue Arrays, in welchen die Antworten durchgewÃ¼rfelt werden
 	let newAnswerArrayA = game.gameSession.questionA.answers;
 	let newAnswerArrayB = game.gameSession.questionB.answers;
 	newAnswerArrayA.sort(function(a, b){return 0.5 - Math.random()});
@@ -315,7 +315,16 @@ app.post('/checkAnswers',function(req,res){
 
 	console.log("----------------" + givenAnswerA);
 	console.log("---------------- " + correct_answerA);
-
+	
+	if (Object.keys(game.gameSession.questionA).length === 0 && Object.keys(game.gameSession.questionB).length === 0) {
+	game.userIsDone(game.userA.id);
+	game.userIsDone(game.userB.id);
+	game.save();
+	if (game.userADone && game.userBDone) {
+		game.gameSession.endSession();
+		game.gameSession.save();
+	}
+	}
 
 	if(userID === game.userA.id){
 				
@@ -351,8 +360,6 @@ app.post('/checkAnswers',function(req,res){
 		
 	}
 
-	
-	if(game.gameSession.getNextQuestion(game.userA.id) !== null){}
 });
 
 //weiterleitung des change profile button zum uploader
@@ -361,7 +368,7 @@ app.post('/change',function(req,res){
 });	
 
 
-//hier wird das hochgeladene bild in die Datenbank des users hinzugefügt/ersetzt
+//hier wird das hochgeladene bild in die Datenbank des users hinzugefÃ¼gt/ersetzt
 app.post('/upload', function(req,res){
 	if (req.session['authenticated'] == true){
   upload(req, res, (err) => {
@@ -390,7 +397,7 @@ app.post('/upload', function(req,res){
 		}
 });
 
-//Änderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
+//Ã„nderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
 app.post('/changecover',function(req,res){
 		let user = new User(userID);
 		if (user.bgimg < 5){
@@ -423,6 +430,3 @@ app.get('/logout',function(req,res){
 	res.redirect('/');
 	
 });
-
-
-
