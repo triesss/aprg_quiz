@@ -5,12 +5,12 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link href="/public/css/style.css" type="text/css" rel="stylesheet">
+        <link href="css/style.css" type="text/css" rel="stylesheet">
 
     </head>
 
 
-    <body onload="loginout()">
+    <body>
 
    
 
@@ -20,11 +20,11 @@
 
     <ul id="menü">
 
-     <li><a href="#">Home</a></li>
-     <li><a href="#">Profil</a></li>
-     <li><a class="play" href="#">Play</a></li>
+     <li><a href="/home">Home</a></li>
+     <li><a href="/profile">Profil</a></li>
+     <li><a class="play" href="/start">Play</a></li>
      <li><a href="#">Leaderboard</a></li>
-     <li><a id="loginbutton" href="#" >Log</a></li>
+     <li><a id="loginbutton" href="/logout">Logout</a></li>
 
     </ul>
 
@@ -35,12 +35,12 @@
         <section id="boxes">
                 <div class="container">
                   <div class="box">
-                    <img src="/images/friends.png" class="pictures">
+                    <img src="images/friends.png" class="pictures">
                     <h3>Play against your friends</h3>
                     <p>Have Fun playing against your friends</p>
                   </div>
                   <div class="box">
-                    <img src="/images/know.jpg" class="pictures">
+                    <img src="images/know.jpg" class="pictures">
                     <h3>Acquire new knowledge</h3>
                     <p>By answering difficult questions you can acquire new knowledge that could be useful in your daily life!</p>
                   </div>
@@ -59,21 +59,6 @@
     </footer>
 
     </div>
-
-    <script>
-
-      //Zeigt login / out je nachdem was erforderlich ist
-      var userIsLoggedIn = false;
-      function loginout(){
-        let loginbutton = document.getElementById('loginbutton');
-           if(userIsLoggedIn){
-             loginbutton.innerHTML = "Logout";
-           }
-           else{
-             loginbutton.innerHTML = "Login";
-           }
-      }
-    </script>
     </body>
 
 
