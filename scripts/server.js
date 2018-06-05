@@ -221,6 +221,7 @@ app.post('/startgame',function(req,res){
 	}
 	else if(Game.prototype.initGameExists()){ 
 		let game = new Game(Game.prototype.getInitGameId(),false);
+		req.session['gameID'] = game.id;
 		game.userB = userID;
 		game.initGameSession();
 		game.gameSession.save();
@@ -229,6 +230,7 @@ app.post('/startgame',function(req,res){
 	}
 	else{
 		let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+		req.session['gameID'] = game.id;
 		res.redirect('/oldgame?gameID='+game.id);
 	}
 });	
@@ -236,6 +238,7 @@ app.post('/startgame',function(req,res){
 app.get('/newGame',function(req,res){
 	Game.prototype.initGame(userID);
 	let game = new Game(userID,true);
+	req.session['gameID'] = game.id;
 	res.render('quiz',{
 	question: game.gameSession.questionA.question,
 	ans1: game.gameSession.questionA.answers[0].answer,
@@ -252,7 +255,7 @@ app.get('/oldGame',function(req,res){
 	let newAnswerArrayA = game.gameSession.questionA.answers;
 	newAnswerArrayA.sort(function(a, b){return 0.5 - Math.random()});
 	console.log(game.gameSession.questionA.answers[3].answer);
-	gameID = req.query.gameID;
+	gameId = req.query.gameID;
 	console.log("gameid: " + gameId);
 	res.render('quiz',{
 	question: game.gameSession.questionA.question,
@@ -275,14 +278,30 @@ app.get('/oldGame',function(req,res){
 	
 });	
 
-app.post('/checkAnswer',function(req,res){
+app.post('/checkAnswers',function(req,res){
+	
+	
+	let game = new Game (req.session['gameID'],false);
+	let answ = req.body["ans"];
+	console.log(answ);
+	console.log(game.gameSession.questionA.answers[0].answer);
+	console.log(game.gameSession.questionA.answers[answ].answer);
+	
 	if(userID === game.userA.id){
+		let correct_answerA = game.gameSession.questionA.answers[0].answer;
+				
+		if (answ === correct_answerA){
+			alert('Funktioniert');
+		}
+		else{
+			alert('Falsche Antwort!')
+		}
 	}
 	
 	if(userID === game.userB.id){
 	let correct_answerB = game.gameSession.questionB.answers[0].answer;
 				
-		if (given_answer_value == correct_answerB){
+		if (answ === correct_answerB){
 			alert('Funktioniert');
 		}
 		else{
