@@ -77,6 +77,10 @@ app.get('/',function(req,res){
 	res.render('regilog');
 });
 
+app.get('/home', function(req,res){
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
 app.post('/register',function(req,res){
 	const user = req.body['username'];
 	const pass = req.body['password'];
@@ -273,9 +277,7 @@ app.get('/oldGame',function(req,res){
     req.session[2] = newAnswerArrayA[2].answer;
     req.session[3] = newAnswerArrayA[3].answer;
 
-	console.log(game.gameSession.questionA.answers[3].answer);
-	gameId = req.query.gameID;
-	console.log("gameid: " + gameId);
+	
 	res.render('quiz',{
 	question: game.gameSession.questionA.question,
 	ans1: newAnswerArrayA[0].answer,
@@ -305,7 +307,7 @@ app.post('/checkAnswers',function(req,res){
 	console.log(answ);
 	console.log(game.gameSession.questionA.answers[0].answer);
 	console.log(game.gameSession.questionA.answers[answ].answer);
-	
+	console.log(req.session[answ]);
 	let givenAnswerA = req.session[answ];
 	let givenAnswerB = req.session[answ];
 	let correct_answerA = game.gameSession.questionA.answers[0].answer;
@@ -319,9 +321,16 @@ app.post('/checkAnswers',function(req,res){
 				
 		if (givenAnswerA == correct_answerA){
 			console.log('Richtige Antwort');
+			game.gameSession.addPoint(game.userA.id);
 		}
 		else{
 			console.log('Falsche Antwort!');
+		}
+		
+		if(game.gameSession.getNextQuestion(game.userA.id) !== null){
+			game.gameSession.questionA = game.gameSession.getNextQuestion(game.userA.id);
+			game.gameSession.save(game.userA.id);
+			res.redirect('/oldgame');
 		}
 	}
 	
@@ -329,10 +338,17 @@ app.post('/checkAnswers',function(req,res){
 				
 		if (givenAnswerB == correct_answerB){
 			console.log('Richtige Antwort');
+			game.gameSession.addPoint(game.userB.id);
 		}
 		else{
 			console.log('Falsche Antwort!');
 		}
+		if(game.gameSession.getNextQuestion(game.userB.id) !== null){
+			game.gameSession.questionB = game.gameSession.getNextQuestion(game.userB.id);
+			game.gameSession.save(game.userB.id);
+			res.redirect('/oldgame');
+		}
+		
 	}
 
 	
