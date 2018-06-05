@@ -235,15 +235,7 @@ app.post('/startgame',function(req,res){
 	
 app.get('/newGame',function(req,res){
 	Game.prototype.initGame(userID);
-	res.render('quiz',{
-		game: game.id
-	});
-});	
-	
-app.get('/oldGame',function(req,res){
-	let game = new Game(req.query.gameID,false);
-	console.log(game.gameSession.questionA.answers[3].answer);
-	
+	let game = new Game(userID,true);
 	res.render('quiz',{
 	question: game.gameSession.questionA.question,
 	ans1: game.gameSession.questionA.answers[0].answer,
@@ -251,9 +243,63 @@ app.get('/oldGame',function(req,res){
 	ans3: game.gameSession.questionA.answers[2].answer,
 	ans4: game.gameSession.questionA.answers[3].answer
 	});
-	
+});	
+
+let gameId;	
+app.get('/oldGame',function(req,res){
+	let game = new Game(req.query.gameID,false);
+	if(userID === game.userA.id){
+	let newAnswerArrayA = game.gameSession.questionA.answers;
+	newAnswerArrayA.sort(function(a, b){return 0.5 - Math.random()});
+	console.log(game.gameSession.questionA.answers[3].answer);
+	gameID = req.query.gameID;
+	console.log("gameid: " + gameId);
+	res.render('quiz',{
+	correct: game.gameSession.questionA.answers[0];
+	question: game.gameSession.questionA.question,
+	ans1: newAnswerArrayA[0].answer,
+	ans2: newAnswerArrayA[1].answer,
+	ans3: newAnswerArrayA[2].answer,
+	ans4: newAnswerArrayA[3].answer
+	});
+	}
+	else if(userID === game.userB.id){
+		game.gameSession.questionB.answers.sort(function(a, b){return 0.5 - Math.random()});
+		res.render('quiz',{
+		question: game.gameSession.questionB.question,
+		ans1: game.gameSession.questionB.answers[0].answer,
+		ans2: game.gameSession.questionB.answers[1].answer,
+		ans3: game.gameSession.questionB.answers[2].answer,
+		ans4: game.gameSession.questionB.answers[3].answer
+		});
+	}
 	
 });	
+
+app.post('/checkAnswer',function(req,res){
+	if(userID === game.userA.id){
+	}
+	
+	if(userID === game.userB.id){
+	let correct_answerB = game.gameSession.questionB.answers[0].answer;
+				
+		if (given_answer_value == correct_answerB){
+			alert('Funktioniert');
+		}
+		else{
+			alert('Falsche Antwort!')
+		}
+	}
+	
+}
+
+const quizB = require('/views/quiz');
+
+quizB.
+
+	
+	if(game.gameSession.getNextQuestion(game.userA.id) !== null){}
+})
 
 //weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
@@ -324,9 +370,5 @@ app.get('/logout',function(req,res){
 	
 });
 
-app.get('/quiz', function(req, res){
-	
-	console.log('game');
-	res.render('quiz', {game: game.id});
-});
+
 
