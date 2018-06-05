@@ -85,8 +85,8 @@ body{
 
 #profilbild{
     position:absolute;
-    left:740px;
-    top:320px;
+    left:45%;
+    top:420px;
     width:150px;
     height:180px;
     border:solid black 1px;
@@ -122,16 +122,16 @@ body{
 
 #pbchanger button{
     position: absolute;
-    top: 570px;
-    right: 195px;
+    top: 670px;
+    right: 20%;
     font-size: 1.2em;
 
 }
 
 #editprofile button{
     position: absolute;
-    top: 570px;
-    right: 450px;
+    top: 670px;
+    right: 40%;
     font-size: 1.2em;
 }
 
@@ -155,8 +155,8 @@ body{
 
 #titelbild form{
     position:absolute;
-    right:195px;
-    top:400px;
+    right:300px;
+    top:470px;
 }
 
 #titelbild form:hover{
