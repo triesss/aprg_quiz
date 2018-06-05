@@ -252,20 +252,20 @@ app.get('/newGame',function(req,res){
 	Game.prototype.initGame(userID);
 	let game = new Game(userID,true);
 	req.session['gameID'] = game.id;
-	res.render('quiz',{
-	question: game.gameSession.questionA.question,
-	ans1: game.gameSession.questionA.answers[0].answer,
-	ans2: game.gameSession.questionA.answers[1].answer,
-	ans3: game.gameSession.questionA.answers[2].answer,
-	ans4: game.gameSession.questionA.answers[3].answer
-	});
+	res.redirect('/profile');
 });	
 
 let gameId;	
 app.get('/oldGame',function(req,res){
 	let game = new Game(req.session['gameID'],false);
+	
+	if (game.userADone && game.userBDone) {
+		game.gameSession.endSession();
+		game.gameSession.save();
+	}
+	
 	if(userID === game.userA.id){
-
+	if(game.gameSession.getNextQuestion(game.userA.id) !== null){
 	//erstellt 2 neue Arrays, in welchen die Antworten durchgewÃ¼rfelt werden
 	let newAnswerArrayA = game.gameSession.questionA.answers;
 	let newAnswerArrayB = game.gameSession.questionB.answers;
@@ -286,7 +286,16 @@ app.get('/oldGame',function(req,res){
 	ans4: newAnswerArrayA[3].answer
 	});
 	}
+	else{
+		game.userIsDone(game.userA.id);
+		game.save();
+		res.redirect('/profile');
+	}
+	
+	}
+	
 	else if(userID === game.userB.id){
+		if(game.gameSession.getNextQuestion(game.userB.id) !== null){
 		game.gameSession.questionB.answers.sort(function(a, b){return 0.5 - Math.random()});
 		res.render('quiz',{
 		question: game.gameSession.questionB.question,
@@ -295,6 +304,12 @@ app.get('/oldGame',function(req,res){
 		ans3: game.gameSession.questionB.answers[2].answer,
 		ans4: game.gameSession.questionB.answers[3].answer
 		});
+		}
+		else{
+			game.userIsDone(game.userB.id);
+			game.save();
+			res.redirect('/profile');
+		}
 	}
 	
 });	
@@ -312,19 +327,53 @@ app.post('/checkAnswers',function(req,res){
 	let givenAnswerB = req.session[answ];
 	let correct_answerA = game.gameSession.questionA.answers[0].answer;
 	let correct_answerB = game.gameSession.questionB.answers[0].answer;
-
+	
+	console.log(game.gameSession.questionB.answers[0].answer);
+	
+	console.log("givenanswerA: " + givenAnswerA);
+	console.log("givenanswerB: " + givenAnswerB);
+	console.log("dies: " +Object.keys(game.gameSession.questionA).length);
+	console.log("das: " +Object.keys(game.gameSession.questionA));
+	console.log("jenes: " +correct_answerA);
+	
+	if (Object.keys(game.gameSession.questionA).length !== 0){
+		console.log("nicht doch");
+	let correct_answerA = game.gameSession.questionA.answers[0].answer;
+	}
+	else {
+		console.log("oh doch");
+		correct_answerA = 0;
+	}
+		
+	if (game.gameSession.questionB.answers.length !== 0){
+		console.log(game.gameSession.questionB);
+	let correct_answerB = game.gameSession.questionB.answers[0].answer;
+	}
+	else{
+		correct_answerB = 0;
+	}
+	/*
 	console.log("----------------" + givenAnswerA);
 	console.log("---------------- " + correct_answerA);
-	
-	if (Object.keys(game.gameSession.questionA).length === 0 && Object.keys(game.gameSession.questionB).length === 0) {
+	*/
+	if (Object.keys(game.gameSession.questionA).length === 0){
 	game.userIsDone(game.userA.id);
+	game.save();
+	res.redirect('/profile');
+	}
+	
+	if (Object.keys(game.gameSession.questionB).length === 0){
 	game.userIsDone(game.userB.id);
 	game.save();
+	res.redirect('/profile');
+	}
+	
 	if (game.userADone && game.userBDone) {
 		game.gameSession.endSession();
 		game.gameSession.save();
 	}
-	}
+	
+	
 
 	if(userID === game.userA.id){
 				
@@ -340,6 +389,9 @@ app.post('/checkAnswers',function(req,res){
 			game.gameSession.questionA = game.gameSession.getNextQuestion(game.userA.id);
 			game.gameSession.save(game.userA.id);
 			res.redirect('/oldgame');
+		}
+		else{
+			res.redirect('/profile');
 		}
 	}
 	
@@ -357,6 +409,10 @@ app.post('/checkAnswers',function(req,res){
 			game.gameSession.save(game.userB.id);
 			res.redirect('/oldgame');
 		}
+		else{
+			res.redirect('/profile');
+		}
+		
 		
 	}
 
