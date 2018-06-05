@@ -255,7 +255,6 @@ app.get('/oldGame',function(req,res){
 	gameID = req.query.gameID;
 	console.log("gameid: " + gameId);
 	res.render('quiz',{
-	correct: game.gameSession.questionA.answers[0];
 	question: game.gameSession.questionA.question,
 	ans1: newAnswerArrayA[0].answer,
 	ans2: newAnswerArrayA[1].answer,
@@ -291,15 +290,15 @@ app.post('/checkAnswer',function(req,res){
 		}
 	}
 	
-}
+
 
 const quizB = require('/views/quiz');
 
-quizB.
+
 
 	
 	if(game.gameSession.getNextQuestion(game.userA.id) !== null){}
-})
+});
 
 //weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
