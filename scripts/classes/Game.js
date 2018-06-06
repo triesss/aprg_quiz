@@ -78,6 +78,10 @@ class Game{
     getInitGameId(){
         return db.prepare('select id from games where ub_id is null and gs_id is null').get().id;
     }
+	enemyIsDone(uid){
+		return uid === this._userA.id? db.prepare('select ub_done from games where id = (?)').get(this._id).ub_done:db.prepare('select ua_done from games where id = (?)').get(this._id).ua_done;
+		
+	}
     save(){
         switch (this._new) {
             case true:
