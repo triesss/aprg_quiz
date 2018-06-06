@@ -22,7 +22,7 @@ else{
 
 
 const session = require('express-session');
-app.use(session({ 
+app.use(session({
 	secret: 'example',
 	resave: false,
 	saveUninitialized: true
@@ -31,7 +31,7 @@ app.use(session({
 app.listen(3000,function(){
 	console.log("Port on 3000");
 
-	
+
 });
 
 //Storage Engine
@@ -85,58 +85,58 @@ app.post('/register',function(req,res){
 	const user = req.body['username'];
 	const pass = req.body['password'];
 	const mail = req.body['email'];
-	
-	
-	
+
+
+
 	if (user === "" || pass === "" || mail === ""){
 		res.render('regilog',{
 			message1: 'empty field'
 		});
-		
+
 	}
 	else{
-	
+
 		if (!User.prototype.usernameExists(user)){
-		
+
 		let user1 = new User(mail,user,pass,null,null,null);
 		user1.save();
 		console.log(user1);
-			
-				
+
+
 		res.render('regilog',{
 		message1: 'Sucessfull, you can now Log in'
 		});
-		
-	
-		
+
+
+
 		}
-		
-		else {	
-			
+
+		else {
+
 			res.render('regilog',{
 			message1: 'username already exist'
-			});	
-			
-		
+			});
+
+
 		}
 	}
 });
-	
-		
+
+
 	let comment;
 	let age;
 	let wins;
 	let loses;
 	let draws;
-	let userID;	
+	let userID;
 	let name; //globale variable fÃ¼r den username
 	app.post('/login',function(req,res){
-	
+
 	const user = req.body['username'];
 	const pass = req.body['password'];
-	
+
 		if (User.prototype.usernameExists(user) && User.prototype.correctPassword(user,pass)){
-			
+
 			req.session['authenticated'] = true;
 				name = user;
 				console.log("Login sucessfull");
@@ -147,41 +147,41 @@ app.post('/register',function(req,res){
 				loses = stats.loses;
 				draws = stats.draws;
 				res.redirect('/profile');
-				
-			
+
+
 		}
-		
+
 		else{
 			res.render('regilog',{
 			message2: 'wrong username or password'
 			});
 			}
-			
-			
-			
-		
-	});
-	
-		
-		
-	
 
-	
+
+
+
+	});
+
+
+
+
+
+
 	let zahl; //fÃ¼r die Titelbilder 1-5 siehe /changecover
-	let im; // diese variable bekommt den namen des profilbildes 
-	
+	let im; // diese variable bekommt den namen des profilbildes
+
 	app.get('/profile', function(req,res){
-		
-		
+
+
 		if (req.session['authenticated'] == true){
-			
-			
+
+
 		let user2 = new User(userID);
 		zahl = user2.bgimg;
 		if(user2.age === null){
 		age = '  ';
 		}
-		
+
 		else{
 			age = user2.age;
 		}
@@ -191,9 +191,9 @@ app.post('/register',function(req,res){
 		else{
 			comment = user2.comment;
 		}
-			
-		
-			
+
+
+
 			if (user2.image === null){
 				console.log("dritter");
 			user2.image = 'nopb.jpg';
@@ -209,11 +209,11 @@ app.post('/register',function(req,res){
 			draws: draws ,
 			age: age ,
 			comment: comment
-			
+
 			});
-		
-		
-		
+
+
+
 	}else{
 		res.render('error', {message: "You have to log in first"});
 	}
@@ -221,14 +221,14 @@ app.post('/register',function(req,res){
 
 
 app.get('/start',function(req,res){
-	
+
 	res.render('start');
 });
 
 
 app.post('/startgame',function(req,res){
 	if (Game.prototype.getGameIdOfEnemy(userID) === -1 && Game.prototype.getGameIdOfUser(userID) === -1 && !Game.prototype.initGameExists()){
-		
+
 		//if (gameidOfUser=== initGameiD)
 		res.redirect('/newGame');
 	}
@@ -236,18 +236,22 @@ app.post('/startgame',function(req,res){
 		if (Game.prototype.initGameExists()) {
 			if (Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()) {
 				let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
-				req.session['gameID'] = game.id;
+				req.session.gameID = game.id;
 				res.redirect('/oldgame?gameID='+game.id);
 			}else{
 				res.render('enemyerror', {'message': "Warte bis dein Gegner gefunden wurde..."});
 			}
+		}else {
+			let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+			req.session.gameID = game.id;
+			res.redirect('/oldgame?gameID='+game.id);
 		}
 
 	}
-	else if(Game.prototype.initGameExists()){ 
+	else if(Game.prototype.initGameExists()){
 		if(Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()){
 		let game = new Game(Game.prototype.getInitGameId(),false);
-		req.session['gameID'] = game.id;
+		req.session.gameID = game.id;
 		game.userB = userID;
 		game.initGameSession();
 		game.gameSession.save();
@@ -261,24 +265,24 @@ app.post('/startgame',function(req,res){
 	else if(Game.prototype.getGameIdOfEnemy(userID) !== -1){
 		res.render('enemyerror', {'message': "Warte bis dein Gegner fertig ist..."});
 	}
-});	
-	
+});
+
 app.get('/newGame',function(req,res){
 	Game.prototype.initGame(userID);
 	let game = new Game(userID,true);
 	req.session['gameID'] = game.id;
 	res.redirect('/profile');
-});	
+});
 
-let gameId;	
+let gameId;
 app.get('/oldGame',function(req,res){
 	let game = new Game(req.session['gameID'],false);
-	
+
 	if (game.userADone && game.userBDone) {
 		game.gameSession.endSession();
 		game.gameSession.save();
 	}
-	
+
 	if(userID === game.userA.id){
 	if(game.gameSession.getNextQuestion(game.userA.id) !== null){
 	//erstellt 2 neue Arrays, in welchen die Antworten durchgewÃ¼rfelt werden
@@ -292,7 +296,7 @@ app.get('/oldGame',function(req,res){
     req.session[2] = newAnswerArrayA[2].answer;
     req.session[3] = newAnswerArrayA[3].answer;
 
-	
+
 	res.render('quiz',{
 	question: game.gameSession.questionA.question,
 	ans1: newAnswerArrayA[0].answer,
@@ -306,9 +310,9 @@ app.get('/oldGame',function(req,res){
 		game.save();
 		res.redirect('/profile');
 	}
-	
+
 	}
-	
+
 	else if(userID === game.userB.id){
 		if(game.gameSession.getNextQuestion(game.userB.id) !== null){
 		game.gameSession.questionB.answers.sort(function(a, b){return 0.5 - Math.random()});
@@ -326,12 +330,12 @@ app.get('/oldGame',function(req,res){
 			res.redirect('/profile');
 		}
 	}
-	
-});	
+
+});
 
 app.post('/checkAnswers',function(req,res){
-	
-	
+
+
 	let game = new Game (req.session['gameID'],false);
 	let answ = req.body["ans"];
 	let givenAnswerA = req.session[answ];
@@ -367,22 +371,22 @@ app.post('/checkAnswers',function(req,res){
 	game.save();
 	res.redirect('/profile');
 	}
-	
+
 	if (Object.keys(game.gameSession.questionB).length === 0){
 	game.userIsDone(game.userB.id);
 	game.save();
 	res.redirect('/profile');
 	}
-	
+
 	if (game.userADone && game.userBDone) {
 		game.gameSession.endSession();
 		game.gameSession.save();
 	}
-	
-	
+
+
 
 	if(userID === game.userA.id){
-				
+
 		if (givenAnswerA == correct_answerA){
 			console.log('Richtige Antwort');
 			game.gameSession.addPoint(game.userA.id);
@@ -390,7 +394,7 @@ app.post('/checkAnswers',function(req,res){
 		else{
 			console.log('Falsche Antwort!');
 		}
-		
+
 		if(game.gameSession.getNextQuestion(game.userA.id) !== null){
 
 			game.gameSession.questionA = game.gameSession.getNextQuestion(game.userA.id);
@@ -401,9 +405,9 @@ app.post('/checkAnswers',function(req,res){
 			res.redirect('/profile');
 		}
 	}
-	
+
 	if(userID === game.userB.id){
-				
+
 		if (givenAnswerB == correct_answerB){
 			console.log('Richtige Antwort');
 			game.gameSession.addPoint(game.userB.id);
@@ -419,8 +423,8 @@ app.post('/checkAnswers',function(req,res){
 		else{
 			res.redirect('/profile');
 		}
-		
-		
+
+
 	}
 
 });
@@ -428,7 +432,7 @@ app.post('/checkAnswers',function(req,res){
 //weiterleitung des change profile button zum uploader
 app.post('/change',function(req,res){
 	res.render('uploader');
-});	
+});
 
 
 //hier wird das hochgeladene bild in die Datenbank des users hinzugefÃ¼gt/ersetzt
@@ -450,11 +454,11 @@ app.post('/upload', function(req,res){
 			user.image = pb;
 			user.save();
 				res.redirect('/profile');
-      
+
 	}}});
-	
+
 	}
-  
+
 		else{
 			res.render('error', {message: "You have to log in first"});
 		}
@@ -471,7 +475,7 @@ app.post('/changecover',function(req,res){
 		}
 		user.save();
 		res.redirect('/profile');
-		
+
 	});
 
 app.post('/edit',function(req,res){
@@ -486,10 +490,10 @@ app.post('/editpt2',function(req,res){
 	user.comment = comment;
 	user.save();
 	res.redirect('/profile');
-});	
-	
+});
+
 app.get('/logout',function(req,res){
 	delete req.session['authenticated'];
 	res.redirect('/');
-	
+
 });
