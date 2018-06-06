@@ -128,8 +128,6 @@ app.post('/register',function(req,res){
 	let wins;
 	let loses;
 	let draws;
-	let userID;
-	let name; //globale variable fÃ¼r den username
 	app.post('/login',function(req,res){
 
 	const user = req.body['username'];
@@ -138,10 +136,10 @@ app.post('/register',function(req,res){
 		if (User.prototype.usernameExists(user) && User.prototype.correctPassword(user,pass)){
 
 			req.session['authenticated'] = true;
-				name = user;
+				req.session["username"] = user;
 				console.log("Login sucessfull");
-				userID = User.prototype.idOfUsername(name);
-				let stats = new Statistic(userID);
+				req.session["userid"] = User.prototype.idOfUsername(req.session["username"]);
+				let stats = new Statistic(req.session["userid"]);
 				stats.save();
 				wins = stats.wins;
 				loses = stats.loses;
@@ -174,9 +172,42 @@ app.post('/register',function(req,res){
 
 
 		if (req.session['authenticated'] == true){
+		/*
+		if(Game.prototype.initGameExists){
+		
+		let game = new Game(Game.prototype.getGameIdOfUser(req.session["userid"]),false);
+		
+		if (game.userADone && game.userBDone) {
+			
+		game.gameSession.endSession();
+        game.gameSession.save();
+			
+		let usa = new UserStatistic(game.userA.id);
+		let usb = new UserStatistic(game.userB.id);	
+		
+		switch (game.gameSession.determineResult()) {
+        case 0:
+        console.log("UserA hat verloren!");        
+            usa.addLose();
+            usb.addWin();
+            break;
+        case 1:
+            console.log("Unentschieden!");
+            usb.addDraw();
+            usa.addDraw();
+            break;
+        case 2:
+            console.log("UserA hat gewonnen!");
+            usb.addLose();
+            usa.addWin();
+            break;
+    }
+		usb.save();
+		usa.save();
+	}
+	} */
 
-
-		let user2 = new User(userID);
+		let user2 = new User(req.session["userid"]);
 		zahl = user2.bgimg;
 		if(user2.age === null){
 		age = '  ';
@@ -203,7 +234,7 @@ app.post('/register',function(req,res){
 			// die entsprechenden Pfade fÃ¼rs Profilbild und Titelbild
 			profile: `uploads/${user2.image}`,
 			cover: `images/titelbild${zahl}.jpg`,
-			user: name ,
+			user: req.session["username"] ,
 			wins: wins ,
 			loses: loses ,
 			draws: draws ,
@@ -227,32 +258,36 @@ app.get('/start',function(req,res){
 
 
 app.post('/startgame',function(req,res){
-	if (Game.prototype.getGameIdOfEnemy(userID) === -1 && Game.prototype.getGameIdOfUser(userID) === -1 && !Game.prototype.initGameExists()){
+	res.redirect('/startGame');
+});
+
+app.get('/startGame',function(req,res){
+	if (Game.prototype.getGameIdOfEnemy(req.session["userid"]) === -1 && Game.prototype.getGameIdOfUser(req.session["userid"]) === -1 && !Game.prototype.initGameExists()){
 
 		//if (gameidOfUser=== initGameiD)
 		res.redirect('/newGame');
 	}
-	else if(Game.prototype.getGameIdOfUser(userID) !== -1){
+	else if(Game.prototype.getGameIdOfUser(req.session["userid"]) !== -1){
 		if (Game.prototype.initGameExists()) {
-			if (Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()) {
-				let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+			if (Game.prototype.getGameIdOfUser(req.session["userid"]) !== Game.prototype.getInitGameId()) {
+				let game = new Game(Game.prototype.getGameIdOfUser(req.session["userid"]),false);
 				req.session.gameID = game.id;
 				res.redirect('/oldgame?gameID='+game.id);
 			}else{
 				res.render('enemyerror', {'message': "Warte bis dein Gegner gefunden wurde..."});
 			}
 		}else {
-			let game = new Game(Game.prototype.getGameIdOfUser(userID),false);
+			let game = new Game(Game.prototype.getGameIdOfUser(req.session["userid"]),false);
 			req.session.gameID = game.id;
 			res.redirect('/oldgame?gameID='+game.id);
 		}
 
 	}
 	else if(Game.prototype.initGameExists()){
-		if(Game.prototype.getGameIdOfUser(userID) !== Game.prototype.getInitGameId()){
+		if(Game.prototype.getGameIdOfUser(req.session["userid"]) !== Game.prototype.getInitGameId()){
 		let game = new Game(Game.prototype.getInitGameId(),false);
 		req.session.gameID = game.id;
-		game.userB = userID;
+		game.userB = req.session["userid"];
 		game.initGameSession();
 		game.gameSession.save();
 		game.save();
@@ -262,16 +297,16 @@ app.post('/startgame',function(req,res){
 			res.render('enemyerror', {'message': "Warte bis dein Gegner gefunden wurde..."});
 		}
 	}
-	else if(Game.prototype.getGameIdOfEnemy(userID) !== -1){
+	else if(Game.prototype.getGameIdOfEnemy(req.session["userid"]) !== -1){
 		res.render('enemyerror', {'message': "Warte bis dein Gegner fertig ist..."});
 	}
 });
 
 app.get('/newGame',function(req,res){
-	Game.prototype.initGame(userID);
-	let game = new Game(userID,true);
+	Game.prototype.initGame(req.session["userid"]);
+	let game = new Game(req.session["userid"],true);
 	req.session['gameID'] = game.id;
-	res.redirect('/profile');
+	res.redirect('/startGame');
 });
 
 let gameId;
@@ -283,7 +318,7 @@ app.get('/oldGame',function(req,res){
 		game.gameSession.save();
 	}
 
-	if(userID === game.userA.id){
+	if(req.session["userid"] === game.userA.id){
 	if(game.gameSession.getNextQuestion(game.userA.id) !== null){
 	//erstellt 2 neue Arrays, in welchen die Antworten durchgewÃ¼rfelt werden
 	let newAnswerArrayA = game.gameSession.questionA.answers;
@@ -313,7 +348,7 @@ app.get('/oldGame',function(req,res){
 
 	}
 
-	else if(userID === game.userB.id){
+	else if(req.session["userid"] === game.userB.id){
 		if(game.gameSession.getNextQuestion(game.userB.id) !== null){
 		game.gameSession.questionB.answers.sort(function(a, b){return 0.5 - Math.random()});
 		res.render('quiz',{
@@ -377,15 +412,16 @@ app.post('/checkAnswers',function(req,res){
 	game.save();
 	res.redirect('/profile');
 	}
-
+	
+	
 	if (game.userADone && game.userBDone) {
 		game.gameSession.endSession();
 		game.gameSession.save();
 	}
+	
 
 
-
-	if(userID === game.userA.id){
+	if(req.session["userid"] === game.userA.id){
 
 		if (givenAnswerA == correct_answerA){
 			console.log('Richtige Antwort');
@@ -406,7 +442,7 @@ app.post('/checkAnswers',function(req,res){
 		}
 	}
 
-	if(userID === game.userB.id){
+	if(req.session["userid"] === game.userB.id){
 
 		if (givenAnswerB == correct_answerB){
 			console.log('Richtige Antwort');
@@ -450,7 +486,7 @@ app.post('/upload', function(req,res){
         });
       } else {
 		 pb = req.file.filename;
-		let user = new User(userID);
+		let user = new User(req.session["userid"]);
 			user.image = pb;
 			user.save();
 				res.redirect('/profile');
@@ -466,7 +502,7 @@ app.post('/upload', function(req,res){
 
 //Ã„nderung der Titelbilder (hinweis kleiner pfeil button rechts vom profilbild)
 app.post('/changecover',function(req,res){
-		let user = new User(userID);
+		let user = new User(req.session["userid"]);
 		if (user.bgimg < 5){
 		user.bgimg += 1;
 		}
@@ -485,7 +521,7 @@ app.post('/edit',function(req,res){
 app.post('/editpt2',function(req,res){
 	age = req.body["age"];
 	comment = req.body["comment"];
-	let user = new User(userID);
+	let user = new User(req.session["userid"]);
 	user.age = age;
 	user.comment = comment;
 	user.save();
