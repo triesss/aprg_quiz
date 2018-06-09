@@ -10,3 +10,7 @@ scripts/old/
 old/
 node_modules/
 package-lock.json
+
+documents/\.DS_Store
+
+\.DS_Store
